@@ -35,6 +35,7 @@ Você não pode:
 
 Se este projeto foi útil para você, considere apoiar o desenvolvimento do Coletivo Máquina Tudo para que novos projetos open-source possam continuar sendo publicados.
 
+[![ko-fi](https://ko-fi.com/img/githubbutton_sm.svg)](https://ko-fi.com/X2B022PXNT)
 ---
 
 Projeto desenvolvido por **Leonardo Gallep** e **Fabrício Masutti** — Coletivo Máquina Tudo.
