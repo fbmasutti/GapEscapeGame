@@ -1,13 +1,13 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
 <title>Escapa Buraco Arcade — Coletivo Máquina Tudo</title>
-<meta name="description" content="Projeto aberto do Escapa Buraco Arcade: firmware Arduino, manual, planos de corte e imagens para download. Por Coletivo Máquina Tudo.">
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<meta content="Projeto aberto do Escapa Buraco Arcade: firmware Arduino, manual, planos de corte e imagens para download. Por Coletivo Máquina Tudo." name="description"/>
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&amp;family=Space+Mono:wght@400;700&amp;display=swap" rel="stylesheet"/>
 <style>
   :root{
     --board:#0f1c22;
@@ -69,7 +69,7 @@
   .btn-primary:hover{background:#ffc257}
   .btn-ghost{border-color:var(--line-strong);color:var(--ink)}
   .btn-ghost:hover{border-color:var(--amber);color:var(--amber)}
-  .btn svg{width:17px;height:17px}
+  .btn svg{width:17px;height:17px;flex-shrink:0}
 
   /* SIGNATURE */
   .stage{width:100%;max-width:440px;margin-inline:auto}
@@ -182,354 +182,285 @@
 </head>
 <body>
 <div class="wrap">
-
-  <header>
-    <div class="topbar">
-      <div class="brand"><span class="dot"></span> Coletivo Máquina Tudo</div>
-      <a class="cclink" href="https://creativecommons.org/licenses/by-nc/4.0/deed.pt-br">CC&nbsp;BY-NC&nbsp;4.0</a>
-    </div>
-
-    <div class="hero">
-      <div class="hero-text">
-        <span class="badge">Arcade V1.0 · projeto open source</span>
-        <h1>Escapa<em>Buraco</em></h1>
-        <p class="lede">Um arcade de habilidade eletromecânico: incline a barra com dois motores de passo e conduza a bolinha até o buraco certo.</p>
-        <p class="by">Por <b>Fabricio Masutti</b> e <b>Leonardo Gallep</b> — Coletivo Máquina Tudo</p>
-       <div class="cta-row">
-
-  <a class="btn btn-primary"
-     href="https://github.com/SEU_USUARIO/SEU_REPOSITORIO/archive/refs/heads/main.zip">
-    <!-- ícone -->
-    Baixar projeto completo (.zip)
-  </a>
-
-  <a class="btn btn-ghost"
-     href="MÁQUINA TUDO_ESCAPA BURACO ARCADE V1.0 - MANUAL DA ESTRUTURA.pdf"
-     download>
-    <!-- ícone -->
-    Manual de montagem
-  </a>
-
-  <a class="btn btn-ghost"
-     href="SOFTWARE/LEIAME.pdf"
-     download>
-    <!-- ícone -->
-    Manual do software
-  </a>
-
+<header>
+<div class="topbar">
+<div class="brand"><span class="dot"></span> Coletivo Máquina Tudo</div>
+<a class="cclink" href="https://creativecommons.org/licenses/by-nc/4.0/deed.pt-br">CC BY-NC 4.0</a>
 </div>
-      </div>
-
-      <div class="stage" aria-hidden="true">
-        <svg viewBox="0 0 440 380" role="img">
-          <rect x="40" y="24" width="360" height="322" rx="20" fill="var(--panel)" stroke="var(--line-strong)"/>
-          <rect x="40" y="24" width="360" height="322" rx="20" fill="none" stroke="rgba(0,0,0,.35)" stroke-width="6" opacity=".25"/>
-          <g>
-            <circle cx="105" cy="78" r="15" fill="#0c161b" stroke="var(--ball)" stroke-width="2.5" opacity=".9"/>
-            <circle cx="185" cy="66" r="15" fill="#0c161b" stroke="var(--line-strong)"/>
-            <circle cx="265" cy="80" r="15" fill="#0c161b" stroke="var(--line-strong)"/>
-            <circle cx="340" cy="70" r="15" fill="#0c161b" stroke="var(--ball)" stroke-width="2.5" opacity=".9"/>
-            <circle cx="140" cy="140" r="15" fill="#0c161b" stroke="var(--line-strong)"/>
-            <circle cx="300" cy="150" r="15" fill="#0c161b" stroke="var(--line-strong)"/>
-            <circle class="target-ring" cx="222" cy="140" r="19" fill="none" stroke="var(--amber)" stroke-width="2.5"/>
-            <circle cx="222" cy="140" r="15" fill="#0c161b" stroke="var(--amber)"/>
-            <text x="222" y="145" text-anchor="middle" font-family="Space Mono, monospace" font-size="13" fill="var(--amber)" font-weight="700">10</text>
-          </g>
-          <g class="bar-grp">
-            <rect x="78" y="250" width="284" height="14" rx="7" fill="var(--panel-2)" stroke="var(--line-strong)"/>
-            <rect x="62" y="238" width="30" height="38" rx="6" fill="#0c161b" stroke="var(--line-strong)"/>
-            <rect x="348" y="238" width="30" height="38" rx="6" fill="#0c161b" stroke="var(--line-strong)"/>
-            <circle cx="70" cy="257" r="3" fill="var(--amber)"/>
-            <circle cx="370" cy="257" r="3" fill="var(--amber)"/>
-            <circle class="ball" cx="220" cy="238" r="14" fill="var(--ball)"/>
-            <circle class="ball" cx="215" cy="233" r="4" fill="#ff8a72" opacity=".8"/>
-          </g>
-          <text x="60" y="330" font-family="Space Mono, monospace" font-size="11" fill="var(--muted)" letter-spacing="2">X ◂ MOTOR ▸ Y</text>
-        </svg>
-      </div>
-    </div>
-
-    <div class="specs mono">
-      <span><b>Arduino Uno</b></span><span class="sep">/</span>
-      <span><b>CNC Shield v3</b></span><span class="sep">/</span>
-      <span>2× <b>DRV8825</b> · 1/32</span><span class="sep">/</span>
-      <span>Display <b>TM1637</b></span><span class="sep">/</span>
-      <span><b>Alto-falante</b></span><span class="sep">/</span>
-      <span>Joysticks</b></span>
-    </div>
-  </header>
-
-  <!-- O PROJETO -->
-  <section id="sobre">
-    <div class="intro-grid">
-      <div>
-        <span class="eyebrow block">O projeto</span>
-        <div class="sec-head"><h2>Um arcade que você mesmo monta</h2></div>
-        <p>Dois motores de passo levantam e abaixam as pontas de uma barra. O jogador inclina a barra para rolar a bolinha por um campo de buracos — mirando os alvos e escapando das armadilhas — enquanto um contador regressivo marca o tempo no display.</p>
-        <p>Tudo é aberto: firmware, manual de montagem, planos de corte e imagens. Feito para o workshop e para quem quiser montar o seu, do zero.</p>
-        <div class="note-card">
-          <span class="eyebrow">Antes de gravar</span>
-          <p>Embora use um CNC Shield, este projeto <b>não usa GRBL</b>. É um firmware próprio que aproveita o shield apenas como interface dos motores.</p>
-        </div>
-      </div>
-      <figure>
-        <img src="IMAGENS/Escapa1.jpg" alt="Escapa Buraco Arcade montado" loading="lazy" onerror="this.closest('figure').style.display='none'">
-        <figcaption>
-          <span>Escapa Buraco Arcade V1.0</span>
-          <a href="IMAGENS/Escapa1.jpg" download>Baixar imagem ↓</a>
-        </figcaption>
-      </figure>
-    </div>
-  </section>
-
-  <!-- BAIXAR TUDO -->
-  <section id="baixar" style="padding-top:0">
-    <div class="grab">
-      <div>
-        <h3>Baixar o projeto completo</h3>
-        <p>Um único .zip com firmware, manual, planos de corte e imagens — direto do repositório.</p>
-      </div>
-      <!-- Troque USUARIO/REPOSITORIO pela URL do seu repo. Confirme se o branch é main ou master. -->
-      <a class="btn btn-primary" href="https://github.com/USUARIO/REPOSITORIO/archive/refs/heads/main.zip">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 3v12m0 0l-4-4m4 4l4-4M4 21h16"/></svg>
+<div class="hero">
+<div class="hero-text">
+<span class="badge">Arcade V1.0 · projeto open source</span>
+<h1>Escapa<em>Buraco</em></h1>
+<p class="lede">Um arcade de habilidade eletromecânico: incline a barra com dois motores de passo e conduza a bolinha até o buraco certo.</p><p class="by">Projeto open source para educação, fabricação digital e cultura maker.</p>
+<p class="by">Por <b>Fabricio Masutti</b> e <b>Leonardo Gallep</b> — Coletivo Máquina Tudo</p>
+<div class="cta-row">
+<a class="btn btn-primary" href="https://github.com/fbmasutti/GapEscapeGame/archive/refs/heads/main.zip">
+<svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M12 3v12m0 0l-4-4m4 4l4-4M4 21h16"></path></svg> Baixar projeto completo (.zip)
+</a>
+<a class="btn btn-primary" download="MÁQUINA TUDO_ESCAPA BURACO ARCADE V1.0 - MANUAL DA ESTRUTURA.pdf" href="MÁQUINA%20TUDO_ESCAPA%20BURACO%20ARCADE%20V1.0%20-%20MANUAL%20DA%20ESTRUTURA.pdf">
+<svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M6 3h9l4 4v14H6zM15 3v4h4"></path></svg>
+            Manual de Montagem
+          </a>
+<a class="btn btn-ghost" href="https://github.com/fbmasutti/GapEscapeGame/blob/main/SOFTWARE/LEIAME.md">
+<svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M6 3h9l4 4v14H6zM15 3v4h4"></path></svg>
+            Manual do Software
+          </a>
+</div>
+</div>
+<div aria-hidden="true" class="stage">
+<svg role="img" viewBox="0 0 440 380">
+<rect fill="var(--panel)" height="322" rx="20" stroke="var(--line-strong)" width="360" x="40" y="24"></rect>
+<rect fill="none" height="322" opacity=".25" rx="20" stroke="rgba(0,0,0,.35)" stroke-width="6" width="360" x="40" y="24"></rect>
+<g>
+<circle cx="105" cy="78" fill="#0c161b" opacity=".9" r="15" stroke="var(--ball)" stroke-width="2.5"></circle>
+<circle cx="185" cy="66" fill="#0c161b" r="15" stroke="var(--line-strong)"></circle>
+<circle cx="265" cy="80" fill="#0c161b" r="15" stroke="var(--line-strong)"></circle>
+<circle cx="340" cy="70" fill="#0c161b" opacity=".9" r="15" stroke="var(--ball)" stroke-width="2.5"></circle>
+<circle cx="140" cy="140" fill="#0c161b" r="15" stroke="var(--line-strong)"></circle>
+<circle cx="300" cy="150" fill="#0c161b" r="15" stroke="var(--line-strong)"></circle>
+<circle class="target-ring" cx="222" cy="140" fill="none" r="19" stroke="var(--amber)" stroke-width="2.5"></circle>
+<circle cx="222" cy="140" fill="#0c161b" r="15" stroke="var(--amber)"></circle>
+<text fill="var(--amber)" font-family="Space Mono, monospace" font-size="13" font-weight="700" text-anchor="middle" x="222" y="145">10</text>
+</g>
+<g class="bar-grp">
+<rect fill="var(--panel-2)" height="14" rx="7" stroke="var(--line-strong)" width="284" x="78" y="250"></rect>
+<rect fill="#0c161b" height="38" rx="6" stroke="var(--line-strong)" width="30" x="62" y="238"></rect>
+<rect fill="#0c161b" height="38" rx="6" stroke="var(--line-strong)" width="30" x="348" y="238"></rect>
+<circle cx="70" cy="257" fill="var(--amber)" r="3"></circle>
+<circle cx="370" cy="257" fill="var(--amber)" r="3"></circle>
+<circle class="ball" cx="220" cy="238" fill="var(--ball)" r="14"></circle>
+<circle class="ball" cx="215" cy="233" fill="#ff8a72" opacity=".8" r="4"></circle>
+</g>
+<text fill="var(--muted)" font-family="Space Mono, monospace" font-size="11" letter-spacing="2" x="60" y="330">X ◂ MOTOR ▸ Y</text>
+</svg>
+</div>
+</div>
+<div class="specs mono">
+<span><b>Arduino Uno</b></span><span class="sep">/</span>
+<span><b>CNC Shield v3</b></span><span class="sep">/</span>
+<span>2× <b>DRV8825</b> · 1/32</span><span class="sep">/</span>
+<span>Display <b>TM1637</b></span><span class="sep">/</span>
+<span><b>Alto-falante</b></span><span class="sep">/</span>
+<span>Joysticks</span>
+</div>
+</header>
+<!-- O PROJETO -->
+<section id="sobre">
+<div class="intro-grid">
+<div>
+<span class="eyebrow block">O projeto</span>
+<div class="sec-head"><h2>Um arcade que você mesmo monta</h2></div>
+<p>Dois motores de passo levantam e abaixam as pontas de uma barra. O jogador inclina a barra para rolar a bolinha por um campo de buracos — mirando os alvos e escapando das armadilhas — enquanto um contador regressivo marca o tempo no display.</p>
+<div class="note-card">
+<span class="eyebrow">Antes de gravar</span>
+<p>Embora use um CNC Shield, este projeto <b>não usa GRBL</b>. É um firmware próprio que aproveita o shield apenas como interface dos motores.</p>
+</div>
+</div>
+<figure>
+<img alt="Escapa Buraco Arcade montado" loading="lazy" onerror="this.closest('figure').style.display='none'" src="IMAGENS/Escapa1.jpg"/>
+<figcaption>
+<span>Escapa Buraco Arcade V1.0</span>
+<a download href="IMAGENS/Escapa1.jpg">Baixar imagem ↓</a>
+</figcaption>
+</figure>
+</div>
+</section>
+<!-- COMO COMEÇAR -->
+<section id="comecar">
+<span class="eyebrow block">Primeiros passos</span>
+<div class="sec-head"><h2>Como começar</h2><p>O caminho mais simples para montar seu Escapa Buraco Arcade.</p></div>
+<div class="cards">
+<div class="card"><span class="ftype">1</span><h3>Baixe o projeto</h3><p>Faça o download do pacote completo.</p></div>
+<div class="card"><span class="ftype">2</span><h3>Corte as peças</h3><p>Utilize os planos de corte.</p></div>
+<div class="card"><span class="ftype">3</span><h3>Monte a estrutura</h3><p>Siga o manual de montagem.</p></div>
+<div class="card"><span class="ftype">4</span><h3>Monte a eletrônica</h3><p>Instale os componentes.</p></div>
+<div class="card"><span class="ftype">5</span><h3>Grave o firmware</h3><p>Envie o código ao Arduino.</p></div>
+<div class="card"><span class="ftype">6</span><h3>Divirta-se!</h3><p>Calibre e aproveite o jogo.</p></div>
+</div>
+</section>
+<!-- BAIXAR TUDO -->
+<section id="baixar" style="padding-top:0">
+<div class="grab">
+<div>
+<h3>Baixar o projeto completo</h3>
+<p>Um único .zip com firmware, manual, planos de corte e imagens — direto do repositório.</p>
+</div>
+<a class="btn btn-primary" href="https://github.com/fbmasutti/GapEscapeGame/archive/refs/heads/main.zip">
+<svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M12 3v12m0 0l-4-4m4 4l4-4M4 21h16"></path></svg>
         Baixar tudo (.zip)
       </a>
-    </div>
-  </section>
-
-<!-- COMO COMEÇAR -->
-  
-<section id="comecar">
-  <span class="eyebrow block">Primeiros passos</span>
-
-  <div class="sec-head">
-    <h2>Como começar</h2>
-    <p>O caminho mais simples para montar seu Escapa Buraco Arcade.</p>
-  </div>
-
-  <div class="cards">
-
-    <div class="card">
-      <span class="ftype">1</span>
-      <h3>Baixe o projeto</h3>
-      <p>Faça o download do pacote completo contendo documentação, firmware e arquivos de corte.</p>
-    </div>
-
-    <div class="card">
-      <span class="ftype">2</span>
-      <h3>Corte as peças</h3>
-      <p>Utilize os planos de corte para produzir as peças em MDF e acrílico.</p>
-    </div>
-
-    <div class="card">
-      <span class="ftype">3</span>
-      <h3>Monte a estrutura</h3>
-      <p>Siga o Manual de Montagem para montar toda a parte mecânica.</p>
-    </div>
-
-    <div class="card">
-      <span class="ftype">4</span>
-      <h3>Monte a eletrônica</h3>
-      <p>Instale motores, sensores, display e demais componentes.</p>
-    </div>
-
-    <div class="card">
-      <span class="ftype">5</span>
-      <h3>Grave o firmware</h3>
-      <p>Abra o projeto no Arduino IDE, instale as bibliotecas e envie o código para a placa.</p>
-    </div>
-
-    <div class="card">
-      <span class="ftype">6</span>
-      <h3>Divirta-se!</h3>
-      <p>Calibre os motores, ajuste a dificuldade e jogue.</p>
-    </div>
-
-    <div class="card">
-      <span class="ftype">7</span>
-      <h3>Compartilhe com a gente</h3>
-      <p>Publique fotos, vídeos ou modificações do seu projeto e marque o Coletivo Máquina Tudo.</p>
-    </div>
-
-  </div>
+</div>
 </section>
-  
-  <!-- DOCUMENTOS -->
-  <section id="documentos">
-    <span class="eyebrow block">Documentos</span>
-    <div class="sec-head">
-      <h2>Manual e planos de corte</h2>
-      <p>PDFs para impressão e corte a laser. Clique para baixar.</p>
-    </div>
-    <div class="cards">
-      <div class="card">
-        <span class="ftype">.pdf · manual</span>
-        <h3>Manual da estrutura</h3>
-        <p>Montagem física da máquina: estrutura, medidas e materiais</p>
-        <div class="links"><a href="MÁQUINA TUDO_ESCAPA BURACO ARCADE V1.0 - MANUAL DA ESTRUTURA.pdf" download="MÁQUINA TUDO_ESCAPA BURACO ARCADE V1.0 - MANUAL DA ESTRUTURA.pdf">Manual da estrutura</a></div>
-      </div>
-      <div class="card">
-        <span class="ftype">.pdf · plano de corte</span>
-        <h3>Plano de corte — Acrílico</h3>
-        <p>Peças em acrílico para corte a laser.</p>
-        <div class="links"><a href="MÁQUINA%20TUDO_ESCAPA%20BURACO%20ARCADE%20V1.0%20-%20PLANO%20DE%20CORTE_ACRÍLICO.pdf" download="MÁQUINA%20TUDO_ESCAPA%20BURACO%20ARCADE%20V1.0%20-%20PLANO%20DE%20CORTE_ACRÍLICO.pdf">Plano acrílico</a></div>
-      </div>
-      <div class="card">
-        <span class="ftype">.pdf · plano de corte</span>
-        <h3>Plano de corte — MDF</h3>
-        <p>Peças em MDF para corte a laser.</p>
-        <div class="links"><a href="MÁQUINA%20TUDO_ESCAPA%20BURACO%20ARCADE%20V1.0%20-%20PLANO%20DE%20CORTE_MDF.pdf" download="MÁQUINA%20TUDO_ESCAPA%20BURACO%20ARCADE%20V1.0%20-%20PLANO%20DE%20CORTE_MDF.pdf">Plano MDF</a></div>
-      </div>
-    </div>
-  </section>
-
-  <!-- SOFTWARE -->
-  <section id="software">
-    <span class="eyebrow block">Software · pasta SOFTWARE/</span>
-    <div class="sec-head">
-      <h2>Firmware e código</h2>
-      <p>Todo o código Arduino, a biblioteca do display e o manual do software.</p>
-    </div>
-    <div class="cards">
-      <div class="card">
-        <span class="ftype">.ino · principal</span>
-        <h3>Firmware</h3>
-        <p>Programa principal: lógica do jogo, motores, display e limites.</p>
-        <div class="links"><a href="SOFTWARE/EscapeBuracoAnalog_v09/EscapeBuracoAnalog_v09.ino">EscapeBuracoAnalog_v09.ino</a></div>
-      </div>
-      <div class="card">
-        <span class="ftype">.ino · áudio</span>
-        <h3>Músicas e sinais</h3>
-        <p>Melodias de início, vitória e game over no alto-falante.</p>
-        <div class="links"><a href="SOFTWARE/EscapeBuracoAnalog_v09/tocarMusica.ino">tocarMusica.ino</a></div>
-      </div>
-      <div class="card">
-        <span class="ftype">.h / .cpp</span>
-        <h3>Notas musicais</h3>
-        <p>Tabela de frequências das notas usada pelas melodias.</p>
-        <div class="links">
-          <a href="SOFTWARE/EscapeBuracoAnalog_v09/pitches.h">pitches.h</a>
-          <a href="SOFTWARE/EscapeBuracoAnalog_v09/pitches.cpp">pitches.cpp</a>
-        </div>
-      </div>
-      <div class="card">
-        <span class="ftype">.zip · biblioteca</span>
-        <h3>Display TM1637</h3>
-        <p>Biblioteca de Avishay Orpaz (avishorp). Instale via “Adicionar biblioteca .ZIP”.</p>
-        <div class="links"><a href="SOFTWARE/libraries/TM1637-avishorp.zip">TM1637-avishorp.zip</a></div>
-      </div>
-      <div class="card">
-        <span class="ftype">.md · manual</span>
-        <h3>Manual do software</h3>
-        <p>Montagem eletrônica, drivers, regulagem de corrente, pinagem e upload.</p>
-        <div class="links"><a href="SOFTWARE/LEIAME.md">LEIAME.md</a></div>
-      </div>
-      <div class="card">
-        <span class="ftype">.jpg · imagem</span>
-        <h3>Imagem do projeto</h3>
-        <p>Foto ilustrativa da máquina montada (pasta IMAGENS/).</p>
-        <div class="links"><a href="IMAGENS/Escapa1.jpg" download>Escapa1.jpg</a></div>
-      </div>
-    </div>
-  </section>
-
-  <!-- PINAGEM -->
-  <section id="pinagem">
-    <span class="eyebrow block">Referência</span>
-    <div class="sec-head">
-      <h2>Pinagem</h2>
-      <p>Todas as chaves usam o pull-up interno do Arduino: fechado = nível baixo (LOW). Diagramas completos no manual do software.</p>
-    </div>
-    <div class="table-scroll">
-      <table>
-        <caption>Função → pino Arduino → porta no CNC Shield</caption>
-        <thead><tr><th>Função</th><th>Pino</th><th>Porta no Shield</th></tr></thead>
-        <tbody>
-          <tr><td>STEP esquerdo (X)</td><td class="pin">D2</td><td class="port">soquete <b>X</b> (X.STEP)</td></tr>
-          <tr><td>DIR esquerdo (X)</td><td class="pin">D5</td><td class="port">soquete <b>X</b> (X.DIR)</td></tr>
-          <tr><td>STEP direito (Y)</td><td class="pin">D3</td><td class="port">soquete <b>Y</b> (Y.STEP)</td></tr>
-          <tr><td>DIR direito (Y)</td><td class="pin">D6</td><td class="port">soquete <b>Y</b> (Y.DIR)</td></tr>
-          <tr><td>ENABLE motores</td><td class="pin">D8</td><td class="port"><b>EN/GND</b></td></tr>
-          <tr><td>Display — CLK</td><td class="pin">D4</td><td class="port"><b>Z.STEP</b></td></tr>
-          <tr><td>Display — DIO</td><td class="pin">D7</td><td class="port"><b>Z.DIR</b></td></tr>
-          <tr><td>Joystick esq. — sobe</td><td class="pin">A0</td><td class="port"><b>Abort</b></td></tr>
-          <tr><td>Joystick esq. — desce</td><td class="pin">A1</td><td class="port"><b>Hold</b></td></tr>
-          <tr><td>Joystick dir. — sobe</td><td class="pin">A2</td><td class="port"><b>Resume</b></td></tr>
-          <tr><td>Joystick dir. — desce</td><td class="pin">A3</td><td class="port"><b>CoolEn</b></td></tr>
-          <tr><td>Fim de curso X</td><td class="pin">D9</td><td class="port"><b>X-</b> (END STOPS)</td></tr>
-          <tr><td>Fim de curso Y</td><td class="pin">D10</td><td class="port"><b>Y-</b> (END STOPS)</td></tr>
-          <tr><td>Alto-falante / buzzer</td><td class="pin">D11</td><td class="port"><b>Z-</b> (END STOPS)</td></tr>
-          <tr><td>Botão de início</td><td class="pin">D12</td><td class="port"><b>SpnEn</b></td></tr>
-          <tr><td>Fim de percurso</td><td class="pin">D13</td><td class="port"><b>SpnDir</b></td></tr>
-          <tr><td>Buraco 10 (vitória)</td><td class="pin">A4</td><td class="port"><b>SDA</b> (I2C)</td></tr>
-        </tbody>
-      </table>
-    </div>
-  </section>
-
-  <!-- AVISOS -->
-  <section id="avisos">
-    <span class="eyebrow block">Não pule estes</span>
-    <div class="sec-head"><h2>Avisos que salvam componentes</h2></div>
-    <div class="warns">
-      <div class="warn">
-        <h3>Orientação do driver</h3>
-        <p>Alinhe o pino EN do driver ao EN do shield. Invertido, o driver queima ao energizar. Use apenas 2 drivers, nos soquetes X e Y.</p>
-      </div>
-      <div class="warn">
-        <h3>Polaridade do display</h3>
-        <p>O TM1637 não tem diodo de proteção contra inversão. Inverter VCC/GND pode danificá-lo — confira duas vezes antes de energizar.</p>
-      </div>
-      <div class="warn amber">
-        <h3>Alto-falante ou buzzer passivo</h3>
-        <p>O firmware gera as notas por software (<span class="mono">tone()</span>). Um buzzer ativo não toca as melodias — use alto-falante ou buzzer passivo.</p>
-      </div>
-      <div class="warn amber">
-        <h3>Regulagem de corrente (Vref)</h3>
-        <p>Ajuste o Vref de cada driver para os seus motores. DRV8825 com Rsense 0,1 Ω: Vref = I ÷ 2. Confira o datasheet do motor e o Rsense da placa.</p>
-      </div>
-    </div>
-  </section>
-
-  <!-- PERSONALIZAÇÃO -->
-  <section id="personalizar">
-    <span class="eyebrow block">Faça o seu</span>
-    <div class="sec-head">
-      <h2>O que dá para ajustar</h2>
-      <p>Constantes no <span class="mono">EscapeBuracoAnalog_v09.ino</span> para adaptar a máquina e a dificuldade.</p>
-    </div>
-    <div class="tune">
-      <div><code>minutos / segundos</code><span>tempo da partida</span></div>
-      <div><code>VELOCIDADE_MAXIMA</code><span>velocidade do movimento (menor = mais rápido)</span></div>
-      <div><code>VELOCIDADE_MINIMA</code><span>velocidade lenta usada nos limites</span></div>
-      <div><code>MAX_PONTOS</code><span>curso máximo da barra</span></div>
-      <div><code>MAX_DIFERENCA_PASSOS</code><span>tolerância de desnível entre as pontas</span></div>
-      <div><code>PASSOS_POR_REVOLUCAO</code><span>escala dos passos (ver nota de micropasso)</span></div>
-    </div>
-  </section>
-
-
-  
-  <footer>
-    <div class="foot-grid">
-      <div>
-        <h4>Licença</h4>
-        <p>Este projeto — código e documentação — é de <b>Fabricio Masutti</b> e <b>Leonardo Gallep</b>, do Coletivo Máquina Tudo.</p>
-        <p class="muted">Você pode compartilhar e adaptar, com crédito e sem uso comercial.</p>
-        <a class="lic" href="https://creativecommons.org/licenses/by-nc/4.0/deed.pt-br">CC BY-NC 4.0 ↗</a>
-      </div>
-      
-      <div>
-        <h4>Créditos de terceiros</h4>
-        <ul class="credits">
-          <li>Display <b>TM1637</b> — Avishay Orpaz (LGPL 2.1)</li>
-          <li>Notas <span class="mono">pitches.h</span> — HiBit</li>
-          <li>Rotina de músicas — base no <em>arduino-songs</em> de Robson Couto</li>
-        </ul>
-      </div>
-    </div>
-  </footer>
-
+<!-- DOCUMENTOS -->
+<section id="documentos">
+<span class="eyebrow block">Documentos</span>
+<div class="sec-head">
+<h2>Manual e planos de corte</h2>
+<p>PDFs para impressão e corte a laser. Clique para baixar.</p>
+</div>
+<div class="cards">
+<div class="card">
+<span class="ftype">.pdf · manual</span>
+<h3>Manual da estrutura</h3>
+<p>Montagem física da máquina: estrutura, medidas e materiais.</p>
+<div class="links"><a download="MÁQUINA TUDO_ESCAPA BURACO ARCADE V1.0 - MANUAL DA ESTRUTURA.pdf" href="MÁQUINA%20TUDO_ESCAPA%20BURACO%20ARCADE%20V1.0%20-%20MANUAL%20DA%20ESTRUTURA.pdf">Manual da estrutura</a></div>
+</div>
+<div class="card">
+<span class="ftype">.pdf · plano de corte</span>
+<h3>Plano de corte — Acrílico</h3>
+<p>Peças em acrílico para corte a laser.</p>
+<div class="links"><a download="MÁQUINA TUDO_ESCAPA BURACO ARCADE V1.0 - PLANO DE CORTE_ACRÍLICO.pdf" href="MÁQUINA%20TUDO_ESCAPA%20BURACO%20ARCADE%20V1.0%20-%20PLANO%20DE%20CORTE_ACRÍLICO.pdf">Plano acrílico</a></div>
+</div>
+<div class="card">
+<span class="ftype">.pdf · plano de corte</span>
+<h3>Plano de corte — MDF</h3>
+<p>Peças em MDF para corte a laser.</p>
+<div class="links"><a download="MÁQUINA TUDO_ESCAPA BURACO ARCADE V1.0 - PLANO DE CORTE_MDF.pdf" href="MÁQUINA%20TUDO_ESCAPA%20BURACO%20ARCADE%20V1.0%20-%20PLANO%20DE%20CORTE_MDF.pdf">Plano MDF</a></div>
+</div>
+</div>
+</section>
+<!-- SOFTWARE -->
+<section id="software">
+<span class="eyebrow block">Software · pasta SOFTWARE/</span>
+<div class="sec-head">
+<h2>Firmware e código</h2>
+<p>Todo o código Arduino, a biblioteca do display e o manual do software.</p>
+</div>
+<div class="cards">
+<div class="card">
+<span class="ftype">.ino · principal</span>
+<h3>Firmware</h3>
+<p>Programa principal: lógica do jogo, motores, display e limites.</p>
+<div class="links"><a href="https://github.com/fbmasutti/GapEscapeGame/blob/main/SOFTWARE/EscapaBuracoAnalog_v09/EscapaBuracoAnalog_v09.ino">EscapaBuracoAnalog_v09.ino</a></div>
+</div>
+<div class="card">
+<span class="ftype">.ino · áudio</span>
+<h3>Músicas e sinais</h3>
+<p>Melodias de início, vitória e game over no alto-falante.</p>
+<div class="links"><a href="https://github.com/fbmasutti/GapEscapeGame/blob/main/SOFTWARE/EscapaBuracoAnalog_v09/tocarMusica.ino">tocarMusica.ino</a></div>
+</div>
+<div class="card">
+<span class="ftype">.h / .cpp</span>
+<h3>Notas musicais</h3>
+<p>Tabela de frequências das notas usada pelas melodias.</p>
+<div class="links">
+<a href="https://github.com/fbmasutti/GapEscapeGame/blob/main/SOFTWARE/EscapaBuracoAnalog_v09/pitches.h">pitches.h</a>
+<a href="https://github.com/fbmasutti/GapEscapeGame/blob/main/SOFTWARE/EscapaBuracoAnalog_v09/pitches.cpp">pitches.cpp</a>
+</div>
+</div>
+<div class="card">
+<span class="ftype">.zip · biblioteca</span>
+<h3>Display TM1637</h3>
+<p>Biblioteca de Avishay Orpaz (avishorp). Instale via “Adicionar biblioteca .ZIP”.</p>
+<div class="links"><a download href="SOFTWARE/libraries/TM1637-avishorp.zip">TM1637-avishorp.zip</a></div>
+</div>
+<div class="card">
+<span class="ftype">.md · manual</span>
+<h3>Manual do software</h3>
+<p>Montagem eletrônica, drivers, regulagem de corrente, pinagem e upload.</p>
+<div class="links"><a href="https://github.com/fbmasutti/GapEscapeGame/blob/main/SOFTWARE/LEIAME.md">LEIAME.md</a></div>
+</div>
+<div class="card">
+<span class="ftype">.jpg · imagem</span>
+<h3>Imagem do projeto</h3>
+<p>Foto ilustrativa da máquina montada (pasta IMAGENS/).</p>
+<div class="links"><a download href="IMAGENS/Escapa1.jpg">Escapa1.jpg</a></div>
+</div>
+</div>
+</section>
+<!-- PINAGEM -->
+<section id="pinagem">
+<span class="eyebrow block">Referência</span>
+<div class="sec-head">
+<h2>Pinagem</h2>
+<p>Todas as chaves usam o pull-up interno do Arduino: fechado = nível baixo (LOW). Diagramas completos no manual do software.</p>
+</div>
+<div class="table-scroll">
+<table>
+<caption>Função → pino Arduino → porta no CNC Shield</caption>
+<thead><tr><th>Função</th><th>Pino</th><th>Porta no Shield</th></tr></thead>
+<tbody>
+<tr><td>STEP esquerdo (X)</td><td class="pin">D2</td><td class="port">soquete <b>X</b> (X.STEP)</td></tr>
+<tr><td>DIR esquerdo (X)</td><td class="pin">D5</td><td class="port">soquete <b>X</b> (X.DIR)</td></tr>
+<tr><td>STEP direito (Y)</td><td class="pin">D3</td><td class="port">soquete <b>Y</b> (Y.STEP)</td></tr>
+<tr><td>DIR direito (Y)</td><td class="pin">D6</td><td class="port">soquete <b>Y</b> (Y.DIR)</td></tr>
+<tr><td>ENABLE motores</td><td class="pin">D8</td><td class="port"><b>EN/GND</b></td></tr>
+<tr><td>Display — CLK</td><td class="pin">D4</td><td class="port"><b>Z.STEP</b></td></tr>
+<tr><td>Display — DIO</td><td class="pin">D7</td><td class="port"><b>Z.DIR</b></td></tr>
+<tr><td>Joystick esq. — sobe</td><td class="pin">A0</td><td class="port"><b>Abort</b></td></tr>
+<tr><td>Joystick esq. — desce</td><td class="pin">A1</td><td class="port"><b>Hold</b></td></tr>
+<tr><td>Joystick dir. — sobe</td><td class="pin">A2</td><td class="port"><b>Resume</b></td></tr>
+<tr><td>Joystick dir. — desce</td><td class="pin">A3</td><td class="port"><b>CoolEn</b></td></tr>
+<tr><td>Fim de curso X</td><td class="pin">D9</td><td class="port"><b>X-</b> (END STOPS)</td></tr>
+<tr><td>Fim de curso Y</td><td class="pin">D10</td><td class="port"><b>Y-</b> (END STOPS)</td></tr>
+<tr><td>Alto-falante / buzzer</td><td class="pin">D11</td><td class="port"><b>Z-</b> (END STOPS)</td></tr>
+<tr><td>Botão de início</td><td class="pin">D12</td><td class="port"><b>SpnEn</b></td></tr>
+<tr><td>Fim de percurso</td><td class="pin">D13</td><td class="port"><b>SpnDir</b></td></tr>
+<tr><td>Buraco 10 (vitória)</td><td class="pin">A4</td><td class="port"><b>SDA</b> (I2C)</td></tr>
+</tbody>
+</table>
+</div>
+</section>
+<!-- AVISOS -->
+<section id="avisos">
+<span class="eyebrow block">Não pule estes</span>
+<div class="sec-head"><h2>Avisos que salvam componentes</h2></div>
+<div class="warns">
+<div class="warn">
+<h3>Orientação do driver</h3>
+<p>Alinhe o pino EN do driver ao EN do shield. Invertido, o driver queima ao energizar. Use apenas 2 drivers, nos soquetes X e Y.</p>
+</div>
+<div class="warn">
+<h3>Polaridade do display</h3>
+<p>O TM1637 não tem diodo de proteção contra inversão. Inverter VCC/GND pode danificá-lo — confira duas vezes antes de energizar.</p>
+</div>
+<div class="warn amber">
+<h3>Alto-falante ou buzzer passivo</h3>
+<p>O firmware gera as notas por software (<span class="mono">tone()</span>). Um buzzer ativo não toca as melodias — use alto-falante ou buzzer passivo.</p>
+</div>
+<div class="warn amber">
+<h3>Regulagem de corrente (Vref)</h3>
+<p>Ajuste o Vref de cada driver para os seus motores. DRV8825 com Rsense 0,1 Ω: Vref = I ÷ 2. Confira o datasheet do motor e o Rsense da placa.</p>
+</div>
+</div>
+</section>
+<!-- PERSONALIZAÇÃO -->
+<section id="personalizar">
+<span class="eyebrow block">Faça o seu</span>
+<div class="sec-head">
+<h2>O que dá para ajustar</h2>
+<p>Constantes no <span class="mono">EscapaBuracoAnalog_v09.ino</span> para adaptar a máquina e a dificuldade.</p>
+</div>
+<div class="tune">
+<div><code>minutos / segundos</code><span>tempo da partida</span></div>
+<div><code>VELOCIDADE_MAXIMA</code><span>velocidade do movimento (menor = mais rápido)</span></div>
+<div><code>VELOCIDADE_MINIMA</code><span>velocidade lenta usada nos limites</span></div>
+<div><code>MAX_PONTOS</code><span>curso máximo da barra</span></div>
+<div><code>MAX_DIFERENCA_PASSOS</code><span>tolerância de desnível entre as pontas</span></div>
+<div><code>PASSOS_POR_REVOLUCAO</code><span>escala dos passos (ver nota de micropasso)</span></div>
+</div>
+</section>
+<footer>
+<div class="foot-grid">
+<div>
+<h4>Coletivo Máquina Tudo</h4>
+<p>O Escapa Buraco Arcade é um dos projetos desenvolvidos pelo Coletivo Máquina Tudo, unindo tecnologia, arte e educação.</p>
+<p class="muted">Montou o seu Escapa Buraco Arcade? Adoraríamos conhecer o resultado!</p>
+<a class="lic" href="https://www.maquinatudo.com.br" target="_blank" rel="noopener">www.maquinatudo.com.br ↗</a>
+<p style="margin-top:16px"><strong>Licença</strong><br/>
+Atribuição-NãoComercial 4.0 Internacional<br/>
+<b>CC BY-NC 4.0</b></p>
+</div>
+<div>
+<h4>Créditos de terceiros</h4>
+<ul class="credits">
+<li>Display <b>TM1637</b> — Avishay Orpaz (LGPL 2.1)</li>
+<li>Notas <span class="mono">pitches.h</span> — HiBit</li>
+<li>Rotina de músicas — base no <em>arduino-songs</em> de Robson Couto</li>
+</ul>
+</div>
+</div>
+</footer>
 </div>
 </body>
 </html>
