@@ -1,0 +1,458 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Escapa Buraco Arcade — Coletivo Máquina Tudo</title>
+<meta name="description" content="Projeto aberto do Escapa Buraco Arcade: firmware Arduino, manual, planos de corte e imagens para download. Por Coletivo Máquina Tudo.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --board:#0f1c22;
+    --panel:#16272e;
+    --panel-2:#1d333c;
+    --ink:#eef2e9;
+    --muted:#9db3ad;
+    --amber:#f4b13e;
+    --ball:#e8503a;
+    --line:rgba(238,242,233,.10);
+    --line-strong:rgba(238,242,233,.18);
+    --maxw:1080px;
+  }
+  *{box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{
+    margin:0;background:var(--board);color:var(--ink);
+    font-family:"Space Grotesk",system-ui,-apple-system,Segoe UI,Roboto,sans-serif;
+    line-height:1.55;-webkit-font-smoothing:antialiased;
+    background-image:radial-gradient(circle at 18% -10%,rgba(244,177,62,.10),transparent 42%),
+                     radial-gradient(circle at 100% 8%,rgba(232,80,58,.08),transparent 40%);
+  }
+  a{color:var(--amber);text-decoration:none}
+  a:hover{text-decoration:underline;text-underline-offset:3px}
+  :focus-visible{outline:2px solid var(--amber);outline-offset:3px;border-radius:4px}
+  .wrap{max-width:var(--maxw);margin:0 auto;padding:0 24px}
+  .mono{font-family:"Space Mono",ui-monospace,SFMono-Regular,Menlo,monospace}
+  .eyebrow{font-family:"Space Mono",monospace;font-size:.72rem;letter-spacing:.22em;
+    text-transform:uppercase;color:var(--muted)}
+
+  /* HERO */
+  header{padding:34px 0 10px}
+  .topbar{display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap}
+  .brand{display:flex;align-items:center;gap:12px;font-weight:700;letter-spacing:.02em}
+  .brand .dot{width:12px;height:12px;border-radius:50%;background:var(--ball);box-shadow:0 0 0 4px rgba(232,80,58,.18)}
+  .cclink{font-family:"Space Mono",monospace;font-size:.74rem;color:var(--muted);
+    border:1px solid var(--line-strong);padding:6px 10px;border-radius:999px}
+  .cclink:hover{color:var(--ink);text-decoration:none;border-color:var(--amber)}
+
+  .hero{display:grid;grid-template-columns:1.05fr .95fr;gap:44px;align-items:center;padding:46px 0 40px}
+  .badge{display:inline-flex;align-items:center;gap:8px;font-family:"Space Mono",monospace;
+    font-size:.74rem;letter-spacing:.14em;text-transform:uppercase;color:var(--amber);
+    border:1px solid rgba(244,177,62,.4);border-radius:999px;padding:6px 12px;margin-bottom:22px}
+  .badge::before{content:"";width:7px;height:7px;border-radius:50%;background:var(--amber)}
+  h1{font-size:clamp(2.9rem,7vw,5rem);line-height:.98;margin:0 0 18px;font-weight:700;letter-spacing:-.02em}
+  h1 em{font-style:normal;color:var(--amber);display:block}
+  .lede{font-size:1.14rem;color:#dbe4dd;max-width:32ch;margin:0 0 14px}
+  .by{color:var(--muted);font-size:.95rem;margin-bottom:26px}
+  .by b{color:var(--ink);font-weight:600}
+  .cta-row{display:flex;gap:14px;flex-wrap:wrap}
+  .btn{display:inline-flex;align-items:center;gap:9px;padding:13px 20px;border-radius:12px;
+    font-weight:600;font-size:.98rem;border:1px solid transparent;transition:transform .12s ease,background .15s ease}
+  .btn:hover{text-decoration:none;transform:translateY(-2px)}
+  .btn-primary{background:var(--amber);color:#241704}
+  .btn-primary:hover{background:#ffc257}
+  .btn-ghost{border-color:var(--line-strong);color:var(--ink)}
+  .btn-ghost:hover{border-color:var(--amber);color:var(--amber)}
+  .btn svg{width:17px;height:17px}
+
+  /* SIGNATURE */
+  .stage{width:100%;max-width:440px;margin-inline:auto}
+  .stage svg{width:100%;height:auto;display:block;filter:drop-shadow(0 24px 40px rgba(0,0,0,.45))}
+  .bar-grp{transform-box:fill-box;transform-origin:center;animation:tilt 6.5s ease-in-out infinite}
+  .ball{transform-box:fill-box;transform-origin:center;animation:roll 6.5s ease-in-out infinite}
+  @keyframes tilt{0%,100%{transform:rotate(-6.5deg)}50%{transform:rotate(6.5deg)}}
+  @keyframes roll{0%,100%{transform:translate(-16px,6px)}50%{transform:translate(16px,6px)}}
+  .target-ring{animation:pulse 2.6s ease-in-out infinite}
+  @keyframes pulse{0%,100%{opacity:.55}50%{opacity:1}}
+
+  /* SPEC STRIP */
+  .specs{border-top:1px solid var(--line);border-bottom:1px solid var(--line);
+    display:flex;flex-wrap:wrap;gap:8px 26px;padding:18px 0;font-family:"Space Mono",monospace;
+    font-size:.82rem;color:var(--muted)}
+  .specs span{white-space:nowrap}
+  .specs b{color:var(--ink);font-weight:400}
+  .specs .sep{color:var(--line-strong)}
+
+  /* SECTIONS */
+  section{padding:60px 0}
+  .eyebrow.block{display:block;margin-bottom:4px}
+  .sec-head{margin-bottom:28px;max-width:62ch}
+  .sec-head h2{font-size:clamp(1.7rem,3.6vw,2.4rem);margin:.4rem 0 .5rem;letter-spacing:-.01em;font-weight:700}
+  .sec-head p{color:var(--muted);margin:0}
+
+  .intro-grid{display:grid;grid-template-columns:1.1fr 1fr;gap:40px;align-items:start}
+  .intro-grid p{color:#d4ded7;font-size:1.06rem}
+  .note-card{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:20px 22px;margin-top:22px}
+  .note-card .eyebrow{color:var(--amber)}
+  .note-card p{margin:.5rem 0 0;color:#d4ded7;font-size:.96rem}
+  figure{margin:0}
+  figure img{width:100%;border-radius:16px;border:1px solid var(--line);display:block}
+  figcaption{color:var(--muted);font-size:.84rem;margin-top:10px;display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap}
+
+  /* DOWNLOAD-ALL */
+  .grab{display:flex;justify-content:space-between;align-items:center;gap:22px;flex-wrap:wrap;
+    background:linear-gradient(120deg,rgba(244,177,62,.10),rgba(232,80,58,.08));
+    border:1px solid var(--line-strong);border-radius:16px;padding:24px 28px}
+  .grab h3{margin:0 0 4px;font-size:1.2rem}
+  .grab p{margin:0;color:var(--muted);font-size:.92rem}
+
+  /* CARDS */
+  .cards{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}
+  .card{background:var(--panel);border:1px solid var(--line);border-radius:16px;padding:22px;
+    display:flex;flex-direction:column;gap:8px;transition:border-color .15s ease,transform .12s ease,background .15s ease}
+  .card:hover{border-color:var(--line-strong);transform:translateY(-3px);background:var(--panel-2)}
+  .card .ftype{font-family:"Space Mono",monospace;font-size:.72rem;letter-spacing:.06em;color:var(--amber)}
+  .card h3{margin:0;font-size:1.1rem;font-weight:600}
+  .card p{margin:0;color:var(--muted);font-size:.9rem;flex:1}
+  .card .links{display:flex;flex-wrap:wrap;gap:8px 16px;margin-top:6px;font-family:"Space Mono",monospace;font-size:.82rem}
+  .card .links a{display:inline-flex;align-items:center;gap:6px}
+  .card .links a::before{content:"↓";color:var(--muted)}
+
+  /* PINOUT */
+  .table-scroll{overflow-x:auto;border:1px solid var(--line);border-radius:14px}
+  table{border-collapse:collapse;width:100%;font-family:"Space Mono",monospace;font-size:.82rem}
+  caption{caption-side:top;text-align:left;padding:14px 16px;color:var(--muted);
+    font-family:"Space Mono",monospace;font-size:.76rem;letter-spacing:.04em}
+  th,td{padding:9px 14px;text-align:left;border-bottom:1px solid var(--line);white-space:nowrap}
+  thead th{color:var(--amber);font-weight:700;position:sticky;top:0;background:var(--panel)}
+  tbody tr:hover{background:var(--panel)}
+  td.pin{color:var(--ball)}
+  td.port b{color:var(--ink);font-weight:700}
+
+  /* WARNINGS */
+  .warns{display:grid;grid-template-columns:repeat(2,1fr);gap:18px}
+  .warn{background:var(--panel);border:1px solid var(--line);border-left:3px solid var(--ball);
+    border-radius:12px;padding:20px 22px}
+  .warn h3{margin:0 0 6px;font-size:1.05rem;font-weight:600}
+  .warn p{margin:0;color:var(--muted);font-size:.92rem}
+  .warn.amber{border-left-color:var(--amber)}
+
+  /* TUNE */
+  .tune{display:grid;grid-template-columns:repeat(2,1fr);gap:12px 34px}
+  .tune div{display:flex;gap:14px;padding:12px 0;border-bottom:1px solid var(--line);align-items:baseline}
+  .tune code{font-family:"Space Mono",monospace;color:var(--amber);font-size:.86rem;white-space:nowrap}
+  .tune span{color:var(--muted);font-size:.94rem}
+
+  /* FOOTER */
+  footer{border-top:1px solid var(--line);padding:48px 0 60px;margin-top:20px}
+  .foot-grid{display:grid;grid-template-columns:1.3fr 1fr;gap:34px}
+  footer h4{font-family:"Space Mono",monospace;font-size:.74rem;letter-spacing:.16em;
+    text-transform:uppercase;color:var(--muted);margin:0 0 14px;font-weight:700}
+  footer p{margin:.3rem 0;color:#cdd8d1;font-size:.94rem}
+  footer .muted{color:var(--muted);font-size:.86rem}
+  .lic{display:inline-block;margin-top:6px;font-family:"Space Mono",monospace;font-size:.8rem;
+    border:1px solid var(--line-strong);border-radius:8px;padding:8px 12px;color:var(--ink)}
+  .credits{padding:0;margin:0}
+  .credits li{margin:.3rem 0;color:#cdd8d1;font-size:.9rem;list-style:none}
+
+  @media (max-width:820px){
+    .hero{grid-template-columns:1fr;gap:8px}
+    .stage{grid-row:1;max-width:340px}
+    .intro-grid,.foot-grid{grid-template-columns:1fr;gap:24px}
+    .cards{grid-template-columns:1fr 1fr}
+    .warns,.tune{grid-template-columns:1fr}
+  }
+  @media (max-width:520px){
+    .cards{grid-template-columns:1fr}
+    section{padding:46px 0}
+  }
+  @media (prefers-reduced-motion:reduce){
+    .bar-grp,.ball,.target-ring{animation:none}
+    .bar-grp{transform:rotate(-3deg)}
+    html{scroll-behavior:auto}
+    .btn:hover,.card:hover{transform:none}
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <header>
+    <div class="topbar">
+      <div class="brand"><span class="dot"></span> Coletivo Máquina Tudo</div>
+      <a class="cclink" href="https://creativecommons.org/licenses/by-nc/4.0/deed.pt-br">CC&nbsp;BY-NC&nbsp;4.0</a>
+    </div>
+
+    <div class="hero">
+      <div class="hero-text">
+        <span class="badge">Arcade V1.0 · projeto aberto</span>
+        <h1>Escapa<em>Buraco</em></h1>
+        <p class="lede">Um arcade de habilidade eletromecânico: incline a barra com dois motores de passo e conduza a bolinha até o buraco certo.</p>
+        <p class="by">Por <b>Fabricio Masutti</b> e <b>Leonardo Gallep</b> — Coletivo Máquina Tudo</p>
+        <div class="cta-row">
+          <a class="btn btn-primary" href="SOFTWARE/EscapeBuracoAnalog_v09/EscapeBuracoAnalog_v09.ino">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 3v12m0 0l-4-4m4 4l4-4M4 21h16"/></svg>
+            Baixar o firmware
+          </a>
+          <a class="btn btn-ghost" href="SOFTWARE/LEIAME.md">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 3h9l4 4v14H6zM15 3v4h4"/></svg>
+            Manual do software
+          </a>
+        </div>
+      </div>
+
+      <div class="stage" aria-hidden="true">
+        <svg viewBox="0 0 440 380" role="img">
+          <rect x="40" y="24" width="360" height="322" rx="20" fill="var(--panel)" stroke="var(--line-strong)"/>
+          <rect x="40" y="24" width="360" height="322" rx="20" fill="none" stroke="rgba(0,0,0,.35)" stroke-width="6" opacity=".25"/>
+          <g>
+            <circle cx="105" cy="78" r="15" fill="#0c161b" stroke="var(--ball)" stroke-width="2.5" opacity=".9"/>
+            <circle cx="185" cy="66" r="15" fill="#0c161b" stroke="var(--line-strong)"/>
+            <circle cx="265" cy="80" r="15" fill="#0c161b" stroke="var(--line-strong)"/>
+            <circle cx="340" cy="70" r="15" fill="#0c161b" stroke="var(--ball)" stroke-width="2.5" opacity=".9"/>
+            <circle cx="140" cy="140" r="15" fill="#0c161b" stroke="var(--line-strong)"/>
+            <circle cx="300" cy="150" r="15" fill="#0c161b" stroke="var(--line-strong)"/>
+            <circle class="target-ring" cx="222" cy="140" r="19" fill="none" stroke="var(--amber)" stroke-width="2.5"/>
+            <circle cx="222" cy="140" r="15" fill="#0c161b" stroke="var(--amber)"/>
+            <text x="222" y="145" text-anchor="middle" font-family="Space Mono, monospace" font-size="13" fill="var(--amber)" font-weight="700">10</text>
+          </g>
+          <g class="bar-grp">
+            <rect x="78" y="250" width="284" height="14" rx="7" fill="var(--panel-2)" stroke="var(--line-strong)"/>
+            <rect x="62" y="238" width="30" height="38" rx="6" fill="#0c161b" stroke="var(--line-strong)"/>
+            <rect x="348" y="238" width="30" height="38" rx="6" fill="#0c161b" stroke="var(--line-strong)"/>
+            <circle cx="70" cy="257" r="3" fill="var(--amber)"/>
+            <circle cx="370" cy="257" r="3" fill="var(--amber)"/>
+            <circle class="ball" cx="220" cy="238" r="14" fill="var(--ball)"/>
+            <circle class="ball" cx="215" cy="233" r="4" fill="#ff8a72" opacity=".8"/>
+          </g>
+          <text x="60" y="330" font-family="Space Mono, monospace" font-size="11" fill="var(--muted)" letter-spacing="2">X ◂ MOTOR ▸ Y</text>
+        </svg>
+      </div>
+    </div>
+
+    <div class="specs mono">
+      <span><b>Arduino Uno</b></span><span class="sep">/</span>
+      <span><b>CNC Shield v3</b></span><span class="sep">/</span>
+      <span>2× <b>DRV8825</b> · 1/32</span><span class="sep">/</span>
+      <span>Display <b>TM1637</b></span><span class="sep">/</span>
+      <span><b>Alto-falante</b></span><span class="sep">/</span>
+      <span>Joysticks + <b>microswitches</b></span>
+    </div>
+  </header>
+
+  <!-- O PROJETO -->
+  <section id="sobre">
+    <div class="intro-grid">
+      <div>
+        <span class="eyebrow block">O projeto</span>
+        <div class="sec-head"><h2>Um arcade que você mesmo monta</h2></div>
+        <p>Dois motores de passo levantam e abaixam as pontas de uma barra. O jogador inclina a barra para rolar a bolinha por um campo de buracos — mirando os alvos e escapando das armadilhas — enquanto um contador regressivo marca o tempo no display.</p>
+        <p>Tudo é aberto: firmware, manual de montagem, planos de corte e imagens. Feito para o workshop e para quem quiser montar o seu, do zero.</p>
+        <div class="note-card">
+          <span class="eyebrow">Antes de gravar</span>
+          <p>Embora use um CNC Shield, este projeto <b>não usa GRBL</b>. É um firmware próprio que aproveita o shield apenas como interface dos motores.</p>
+        </div>
+      </div>
+      <figure>
+        <img src="IMAGENS/Escapa1.jpg" alt="Escapa Buraco Arcade montado" loading="lazy" onerror="this.closest('figure').style.display='none'">
+        <figcaption>
+          <span>Escapa Buraco Arcade V1.0</span>
+          <a href="IMAGENS/Escapa1.jpg" download>Baixar imagem ↓</a>
+        </figcaption>
+      </figure>
+    </div>
+  </section>
+
+  <!-- BAIXAR TUDO -->
+  <section id="baixar" style="padding-top:0">
+    <div class="grab">
+      <div>
+        <h3>Baixar o projeto completo</h3>
+        <p>Um único .zip com firmware, manual, planos de corte e imagens — direto do repositório.</p>
+      </div>
+      <!-- Troque USUARIO/REPOSITORIO pela URL do seu repo. Confirme se o branch é main ou master. -->
+      <a class="btn btn-primary" href="https://github.com/USUARIO/REPOSITORIO/archive/refs/heads/main.zip">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 3v12m0 0l-4-4m4 4l4-4M4 21h16"/></svg>
+        Baixar tudo (.zip)
+      </a>
+    </div>
+  </section>
+
+  <!-- DOCUMENTOS -->
+  <section id="documentos">
+    <span class="eyebrow block">Documentos</span>
+    <div class="sec-head">
+      <h2>Manual e planos de corte</h2>
+      <p>PDFs para impressão e corte a laser. Clique para baixar.</p>
+    </div>
+    <div class="cards">
+      <div class="card">
+        <span class="ftype">.pdf · manual</span>
+        <h3>Manual da estrutura</h3>
+        <p>Montagem física da máquina: estrutura, medidas e componentes.</p>
+        <div class="links"><a href="MÁQUINA%20TUDO_ESCAPA%20BURACO%20ARCADE%20V1.0%20-%20MANUAL%20DA%20ESTRUTURA.pdf" download>Manual da estrutura</a></div>
+      </div>
+      <div class="card">
+        <span class="ftype">.pdf · plano de corte</span>
+        <h3>Plano de corte — Acrílico</h3>
+        <p>Peças em acrílico para corte a laser.</p>
+        <div class="links"><a href="MÁQUINA%20TUDO_ESCAPA%20BURACO%20ARCADE%20V1.0%20-%20PLANO%20DE%20CORTE_ACRÍLICO.pdf" download>Plano acrílico</a></div>
+      </div>
+      <div class="card">
+        <span class="ftype">.pdf · plano de corte</span>
+        <h3>Plano de corte — MDF</h3>
+        <p>Peças em MDF para corte a laser.</p>
+        <div class="links"><a href="MÁQUINA%20TUDO_ESCAPA%20BURACO%20ARCADE%20V1.0%20-%20PLANO%20DE%20CORTE_MDF.pdf" download>Plano MDF</a></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SOFTWARE -->
+  <section id="software">
+    <span class="eyebrow block">Software · pasta SOFTWARE/</span>
+    <div class="sec-head">
+      <h2>Firmware e código</h2>
+      <p>Todo o código Arduino, a biblioteca do display e o manual do software.</p>
+    </div>
+    <div class="cards">
+      <div class="card">
+        <span class="ftype">.ino · principal</span>
+        <h3>Firmware</h3>
+        <p>Programa principal: lógica do jogo, motores, display e limites.</p>
+        <div class="links"><a href="SOFTWARE/EscapeBuracoAnalog_v09/EscapeBuracoAnalog_v09.ino">EscapeBuracoAnalog_v09.ino</a></div>
+      </div>
+      <div class="card">
+        <span class="ftype">.ino · áudio</span>
+        <h3>Músicas e sinais</h3>
+        <p>Melodias de início, vitória e game over no alto-falante.</p>
+        <div class="links"><a href="SOFTWARE/EscapeBuracoAnalog_v09/tocarMusica.ino">tocarMusica.ino</a></div>
+      </div>
+      <div class="card">
+        <span class="ftype">.h / .cpp</span>
+        <h3>Notas musicais</h3>
+        <p>Tabela de frequências das notas usada pelas melodias.</p>
+        <div class="links">
+          <a href="SOFTWARE/EscapeBuracoAnalog_v09/pitches.h">pitches.h</a>
+          <a href="SOFTWARE/EscapeBuracoAnalog_v09/pitches.cpp">pitches.cpp</a>
+        </div>
+      </div>
+      <div class="card">
+        <span class="ftype">.zip · biblioteca</span>
+        <h3>Display TM1637</h3>
+        <p>Biblioteca de Avishay Orpaz (avishorp). Instale via “Adicionar biblioteca .ZIP”.</p>
+        <div class="links"><a href="SOFTWARE/libraries/TM1637-avishorp.zip">TM1637-avishorp.zip</a></div>
+      </div>
+      <div class="card">
+        <span class="ftype">.md · manual</span>
+        <h3>Manual do software</h3>
+        <p>Montagem eletrônica, drivers, regulagem de corrente, pinagem e upload.</p>
+        <div class="links"><a href="SOFTWARE/LEIAME.md">LEIAME.md</a></div>
+      </div>
+      <div class="card">
+        <span class="ftype">.jpg · imagem</span>
+        <h3>Imagem do projeto</h3>
+        <p>Foto ilustrativa da máquina montada (pasta IMAGENS/).</p>
+        <div class="links"><a href="IMAGENS/Escapa1.jpg" download>Escapa1.jpg</a></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- PINAGEM -->
+  <section id="pinagem">
+    <span class="eyebrow block">Referência</span>
+    <div class="sec-head">
+      <h2>Pinagem</h2>
+      <p>Todas as chaves usam o pull-up interno do Arduino: fechado = nível baixo (LOW). Diagramas completos no manual do software.</p>
+    </div>
+    <div class="table-scroll">
+      <table>
+        <caption>Função → pino Arduino → porta no CNC Shield</caption>
+        <thead><tr><th>Função</th><th>Pino</th><th>Porta no Shield</th></tr></thead>
+        <tbody>
+          <tr><td>STEP esquerdo (X)</td><td class="pin">D2</td><td class="port">soquete <b>X</b> (X.STEP)</td></tr>
+          <tr><td>DIR esquerdo (X)</td><td class="pin">D5</td><td class="port">soquete <b>X</b> (X.DIR)</td></tr>
+          <tr><td>STEP direito (Y)</td><td class="pin">D3</td><td class="port">soquete <b>Y</b> (Y.STEP)</td></tr>
+          <tr><td>DIR direito (Y)</td><td class="pin">D6</td><td class="port">soquete <b>Y</b> (Y.DIR)</td></tr>
+          <tr><td>ENABLE motores</td><td class="pin">D8</td><td class="port"><b>EN/GND</b></td></tr>
+          <tr><td>Display — CLK</td><td class="pin">D4</td><td class="port"><b>Z.STEP</b></td></tr>
+          <tr><td>Display — DIO</td><td class="pin">D7</td><td class="port"><b>Z.DIR</b></td></tr>
+          <tr><td>Joystick esq. — sobe</td><td class="pin">A0</td><td class="port"><b>Abort</b></td></tr>
+          <tr><td>Joystick esq. — desce</td><td class="pin">A1</td><td class="port"><b>Hold</b></td></tr>
+          <tr><td>Joystick dir. — sobe</td><td class="pin">A2</td><td class="port"><b>Resume</b></td></tr>
+          <tr><td>Joystick dir. — desce</td><td class="pin">A3</td><td class="port"><b>CoolEn</b></td></tr>
+          <tr><td>Fim de curso X</td><td class="pin">D9</td><td class="port"><b>X-</b> (END STOPS)</td></tr>
+          <tr><td>Fim de curso Y</td><td class="pin">D10</td><td class="port"><b>Y-</b> (END STOPS)</td></tr>
+          <tr><td>Alto-falante / buzzer</td><td class="pin">D11</td><td class="port"><b>Z-</b> (END STOPS)</td></tr>
+          <tr><td>Botão de início</td><td class="pin">D12</td><td class="port"><b>SpnEn</b></td></tr>
+          <tr><td>Fim de percurso</td><td class="pin">D13</td><td class="port"><b>SpnDir</b></td></tr>
+          <tr><td>Buraco 10 (vitória)</td><td class="pin">A4</td><td class="port"><b>SDA</b> (I2C)</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <!-- AVISOS -->
+  <section id="avisos">
+    <span class="eyebrow block">Não pule estes</span>
+    <div class="sec-head"><h2>Avisos que salvam componentes</h2></div>
+    <div class="warns">
+      <div class="warn">
+        <h3>Orientação do driver</h3>
+        <p>Alinhe o pino EN do driver ao EN do shield. Invertido, o driver queima ao energizar. Use apenas 2 drivers, nos soquetes X e Y.</p>
+      </div>
+      <div class="warn">
+        <h3>Polaridade do display</h3>
+        <p>O TM1637 não tem diodo de proteção contra inversão. Inverter VCC/GND pode danificá-lo — confira duas vezes antes de energizar.</p>
+      </div>
+      <div class="warn amber">
+        <h3>Alto-falante ou buzzer passivo</h3>
+        <p>O firmware gera as notas por software (<span class="mono">tone()</span>). Um buzzer ativo não toca as melodias — use alto-falante ou buzzer passivo.</p>
+      </div>
+      <div class="warn amber">
+        <h3>Regulagem de corrente (Vref)</h3>
+        <p>Ajuste o Vref de cada driver para os seus motores. DRV8825 com Rsense 0,1 Ω: Vref = I ÷ 2. Confira o datasheet do motor e o Rsense da placa.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- PERSONALIZAÇÃO -->
+  <section id="personalizar">
+    <span class="eyebrow block">Faça o seu</span>
+    <div class="sec-head">
+      <h2>O que dá para ajustar</h2>
+      <p>Constantes no <span class="mono">EscapeBuracoAnalog_v09.ino</span> para adaptar a máquina e a dificuldade.</p>
+    </div>
+    <div class="tune">
+      <div><code>minutos / segundos</code><span>tempo da partida</span></div>
+      <div><code>VELOCIDADE_MAXIMA</code><span>velocidade do movimento (menor = mais rápido)</span></div>
+      <div><code>VELOCIDADE_MINIMA</code><span>velocidade lenta usada nos limites</span></div>
+      <div><code>MAX_PONTOS</code><span>curso máximo da barra</span></div>
+      <div><code>MAX_DIFERENCA_PASSOS</code><span>tolerância de desnível entre as pontas</span></div>
+      <div><code>PASSOS_POR_REVOLUCAO</code><span>escala dos passos (ver nota de micropasso)</span></div>
+    </div>
+  </section>
+
+  <footer>
+    <div class="foot-grid">
+      <div>
+        <h4>Licença</h4>
+        <p>Este projeto — código e documentação — é de <b>Fabricio Masutti</b> e <b>Leonardo Gallep</b>, do Coletivo Máquina Tudo.</p>
+        <p class="muted">Você pode compartilhar e adaptar, com crédito e sem uso comercial.</p>
+        <a class="lic" href="https://creativecommons.org/licenses/by-nc/4.0/deed.pt-br">CC BY-NC 4.0 ↗</a>
+      </div>
+      <div>
+        <h4>Créditos de terceiros</h4>
+        <ul class="credits">
+          <li>Display <b>TM1637</b> — Avishay Orpaz (LGPL 2.1)</li>
+          <li>Notas <span class="mono">pitches.h</span> — HiBit</li>
+          <li>Rotina de músicas — base no <em>arduino-songs</em> de Robson Couto</li>
+        </ul>
+      </div>
+    </div>
+  </footer>
+
+</div>
+</body>
+</html>
