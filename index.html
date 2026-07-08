@@ -41,7 +41,7 @@
   /* HERO */
   header{padding:34px 0 10px}
   .topbar{display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap}
-  .brand{display:flex;align-items:center;gap:12px;font-weight:700;letter-spacing:.02em}
+  .brand{display:flex;align-items:left;gap:12px;font-weight:700;letter-spacing:.02em}
   .brand .dot{width:12px;height:12px;border-radius:50%;background:var(--ball);box-shadow:0 0 0 4px rgba(232,80,58,.18)}
   .cclink{font-family:"Space Mono",monospace;font-size:.74rem;color:var(--muted);
     border:1px solid var(--line-strong);padding:6px 10px;border-radius:999px}
@@ -184,7 +184,9 @@
 <div class="wrap">
 <header>
 <div class="topbar">
-<div class="brand"><img src="https://github.com/fbmasutti/PixFront/blob/main/Logomaquina.svg"> Coletivo Máquina Tudo</div>
+<div class="img">
+  <img src="https://github.com/fbmasutti/PixFront/blob/main/Logobranco.png?raw=true" style="width: 40%; height: auto;"></div>
+  <div class="brand"> Coletivo Máquina Tudo</div>
 <a class="cclink" href="https://creativecommons.org/licenses/by-nc/4.0/deed.pt-br">CC BY-NC 4.0</a>
 </div>
 <div class="hero">
@@ -251,10 +253,7 @@
 <span class="eyebrow block">O projeto</span>
 <div class="sec-head"><h2>Um arcade que você mesmo monta</h2></div>
 <p>Dois motores de passo levantam e abaixam as pontas de uma barra. O jogador inclina a barra para rolar a bolinha por um campo de buracos — mirando os alvos e escapando das armadilhas — enquanto um contador regressivo marca o tempo no display.</p>
-<div class="note-card">
-<span class="eyebrow">Antes de gravar</span>
-<p>Embora use um CNC Shield, este projeto <b>não usa GRBL</b>. É um firmware próprio que aproveita o shield apenas como interface dos motores.</p>
-</div>
+
 </div>
 <figure>
 <img alt="Escapa Buraco Arcade montado" loading="lazy" onerror="this.closest('figure').style.display='none'" src="IMAGENS/Escapa1.jpg"/>
@@ -368,6 +367,12 @@
 </div>
 </div>
 </section>
+
+<div class="note-card">
+<span class="eyebrow">Antes de gravar</span>
+<p>Embora use um CNC Shield, este projeto <b>não usa GRBL</b>. É um firmware próprio que aproveita o shield apenas como interface dos motores.</p>
+</div>
+
 <!-- PINAGEM -->
 <section id="pinagem">
 <span class="eyebrow block">Referência</span>
@@ -411,16 +416,16 @@
 <p>Alinhe o pino EN do driver ao EN do shield. Invertido, o driver queima ao energizar. Use apenas 2 drivers, nos soquetes X e Y.</p>
 </div>
 <div class="warn">
+<h3>Regulagem de corrente (Vref)</h3>
+<p>Ajuste o Vref de cada driver para os seus motores. DRV8825 com Rsense 0,1 Ω: Vref = I ÷ 2. Confira o datasheet do motor e o Rsense da placa.</p>
+</div>
+<div class="warn amber">
 <h3>Polaridade do display</h3>
-<p>O TM1637 não tem diodo de proteção contra inversão. Inverter VCC/GND pode danificá-lo — confira duas vezes antes de energizar.</p>
+<p>O TM1637 não tem diodo de proteção contra inversão. Inverter VCC/GND pode danificar outros componentes — confira duas vezes antes de energizar.</p>
 </div>
 <div class="warn amber">
 <h3>Alto-falante ou buzzer passivo</h3>
 <p>O firmware gera as notas por software (<span class="mono">tone()</span>). Um buzzer ativo não toca as melodias — use alto-falante ou buzzer passivo.</p>
-</div>
-<div class="warn amber">
-<h3>Regulagem de corrente (Vref)</h3>
-<p>Ajuste o Vref de cada driver para os seus motores. DRV8825 com Rsense 0,1 Ω: Vref = I ÷ 2. Confira o datasheet do motor e o Rsense da placa.</p>
 </div>
 </div>
 </section>
@@ -447,10 +452,15 @@
 <p>O Escapa Buraco Arcade é um dos projetos desenvolvidos pelo Coletivo Máquina Tudo, unindo tecnologia, arte e educação.</p>
 <p class="muted">Montou o seu Escapa Buraco Arcade? Adoraríamos conhecer o resultado!</p>
 <a class="lic" href="https://www.maquinatudo.com.br" target="_blank" rel="noopener">www.maquinatudo.com.br ↗</a>
+<h4>Considere nos apoiar!</h4>
+
+<p>Estes arquivos são abertos e gratuitos, entretanto toda a pesquisa e elaboração requer muito tempo e recursos. Considere nos apoiar por meio de PIX ou pagando um cafezinho via ko-fi</p>
+
 <p style="margin-top:16px"><strong>Licença</strong><br/>
 Atribuição-NãoComercial 4.0 Internacional<br/>
 <b>CC BY-NC 4.0</b></p>
 </div>
+
 <div>
 <h4>Créditos de terceiros</h4>
 <ul class="credits">
@@ -460,6 +470,15 @@ Atribuição-NãoComercial 4.0 Internacional<br/>
 </ul>
 </div>
 </div>
+
+<iframe id='pixframe'
+  src='https://github.com/fbmasutti/PixFront/blob/320f87d323a2ee7ab1502e20af90775287507766/maquina_pix.html'
+  style='border:none;width:100%;padding:4px;background:transparent;'
+  height='700'
+  title='Pague quanto puder via Pix'>
+</iframe>
+
+
 </footer>
 </div>
 </body>
