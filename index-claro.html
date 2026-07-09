@@ -1,0 +1,561 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Escapa Buraco Arcade — Coletivo Máquina Tudo</title>
+<meta content="Fliperama de madeira open source: corte, monte e jogue. Firmware, manuais e planos de corte para download." name="description"/>
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&amp;family=Space+Mono:wght@400;700&amp;display=swap" rel="stylesheet"/>
+<style>
+  :root{
+    --paper:#f4f1ea; --surface:#ffffff; --surface-2:#ebe6da;
+    --ink:#1b1a17; --ink-soft:#5c574e;
+    --orange:#e75d24;
+    --line:#e2dccf; --line-strong:#cfc7b6;
+    --c1:#c1633c; --c2:#9a6ec9; --c3:#58c4ad; --c4:#cbc94f; --c5:#454a6c;
+    --c1l:#f6e7dc; --c2l:#efe7f7; --c3l:#ddf2ed; --c4l:#f3f2dc; --c5l:#e5e6ed;
+    --maxw:1060px;
+  }
+  *{box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{margin:0;background:var(--paper);color:var(--ink);
+    font-family:"Space Grotesk",system-ui,-apple-system,Segoe UI,Roboto,sans-serif;
+    line-height:1.4;-webkit-font-smoothing:antialiased}
+  .wrap{max-width:var(--maxw);margin:0 auto;padding:0 24px}
+  .mono{font-family:"Space Mono",ui-monospace,SFMono-Regular,Menlo,monospace}
+  .eyebrow{font-family:"Space Mono",monospace;font-size:.72rem;letter-spacing:.2em;
+    text-transform:uppercase;color:var(--orange);display:block;margin-bottom:6px;font-weight:700}
+  a{color:var(--ink);text-decoration:none}
+  :focus-visible{outline:2px solid var(--orange);outline-offset:3px;border-radius:4px}
+
+  /* botões: sempre laranja (sólido ou contorno) */
+  .btn{display:inline-flex;align-items:center;gap:9px;padding:11px 18px;border-radius:10px;
+    font-weight:600;font-size:.95rem;border:2px solid transparent;transition:transform .12s ease,background .15s ease,color .15s ease;white-space:nowrap}
+  .btn:hover{transform:translateY(-2px)}
+  .btn-primary{background:var(--orange);color:#fff}
+  .btn-primary:hover{background:#d24e18}
+  .btn-ghost{border-color:var(--orange);color:var(--orange);background:transparent}
+  .btn-ghost:hover{background:var(--orange);color:#fff}
+  .btn svg{width:16px;height:16px;flex-shrink:0}
+  .btn.sm{padding:8px 13px;font-size:.85rem;border-radius:9px}
+
+  /* NAV */
+  .topnav{position:sticky;top:0;z-index:50;background:rgba(244,241,234,.9);
+    backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);border-bottom:1px solid var(--line)}
+  .nav-inner{display:flex;align-items:center;gap:18px;height:58px}
+  .nav-brand{display:flex;align-items:center;gap:10px;font-weight:700}
+  .nav-logo{height:30px;width:auto;display:block}
+  .nav-links{display:flex;gap:24px;margin-left:auto;align-items:center}
+  .nav-links a:not(.btn){font-size:.92rem;color:var(--ink-soft);font-weight:500;padding:6px 0;position:relative}
+  .nav-links a:not(.btn):hover{color:var(--ink)}
+  .nav-links a.active{color:var(--ink)}
+  .nav-links a.active::after{content:"";position:absolute;left:0;right:0;bottom:-2px;height:2px;background:var(--orange)}
+  .nav-cta{margin-left:6px}
+  .nav-toggle{display:none;background:none;border:1.5px solid var(--line-strong);border-radius:9px;
+    width:42px;height:38px;cursor:pointer;color:var(--ink);align-items:center;justify-content:center}
+  .nav-toggle svg{width:20px;height:20px}
+
+  /* HERO */
+  .hero{display:grid;grid-template-columns:1.05fr .95fr;gap:36px;align-items:center;padding:36px 0 20px}
+  .badge{display:inline-flex;align-items:center;gap:8px;font-family:"Space Mono",monospace;
+    font-size:.72rem;letter-spacing:.12em;text-transform:uppercase;color:var(--orange);font-weight:700;
+    border:1.5px solid var(--orange);border-radius:999px;padding:5px 12px;margin-bottom:16px}
+  h1{font-size:clamp(3rem,7.5vw,5.2rem);line-height:.92;margin:0 0 12px;font-weight:700;letter-spacing:-.025em}
+  h1 em{font-style:normal;color:var(--orange);display:block}
+  .lede{font-size:1.18rem;color:var(--ink-soft);max-width:26ch;margin:0 0 18px;line-height:1.28}
+  .cta-row{display:flex;gap:12px;flex-wrap:wrap;align-items:center}
+
+  .stage{width:100%;max-width:400px;margin-inline:auto}
+  .stage svg{width:100%;height:auto;display:block}
+  .bar-grp{transform-box:fill-box;transform-origin:center;animation:tilt 6.5s ease-in-out infinite}
+  .ball{transform-box:fill-box;transform-origin:center;animation:roll 6.5s ease-in-out infinite}
+  @keyframes tilt{0%,100%{transform:rotate(-6.5deg)}50%{transform:rotate(6.5deg)}}
+  @keyframes roll{0%,100%{transform:translate(-16px,6px)}50%{transform:translate(16px,6px)}}
+  .target-ring{animation:pulse 2.6s ease-in-out infinite}
+  @keyframes pulse{0%,100%{opacity:.5}50%{opacity:1}}
+
+  /* SECTIONS */
+  section{padding:38px 0}
+  .sec-head{margin-bottom:18px;max-width:60ch}
+  .sec-head h2{font-size:clamp(1.8rem,4vw,2.4rem);margin:0 0 .25rem;letter-spacing:-.015em;font-weight:700}
+  .sec-head p{color:var(--ink-soft);margin:0;font-size:1rem}
+
+  /* INTRO */
+  .intro-grid{display:grid;grid-template-columns:1fr 1fr;gap:32px;align-items:center}
+  .intro-grid p{color:var(--ink-soft);font-size:1.08rem;line-height:1.4;margin:0}
+  figure{margin:0}
+  figure img{width:100%;border-radius:16px;border:1px solid var(--line);display:block}
+  figcaption{color:var(--ink-soft);font-size:.84rem;margin-top:8px;display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap}
+  figcaption a{color:var(--orange);font-weight:600}
+
+  /* NEEDS */
+  .needs{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+  .need{border:1px solid var(--line);border-radius:14px;padding:18px 22px}
+  .needs .need:nth-child(1){background:var(--c5l)}
+  .needs .need:nth-child(2){background:var(--c3l)}
+  .need h3{margin:0 0 8px;font-size:1.04rem}
+  .need ul{margin:0;padding-left:1.1em}
+  .need li{margin:.24rem 0;color:var(--ink-soft);font-size:.93rem;line-height:1.35}
+  .need li b{color:var(--ink)}
+
+  /* STEPS + SISTEMA DE CORES */
+  .journey{display:flex;flex-direction:column;gap:8px}
+  .step{display:grid;grid-template-columns:auto 1fr auto;gap:18px;align-items:center;
+    background:var(--scl);border:1px solid var(--line);border-left:4px solid var(--sc);
+    border-radius:12px;padding:14px 20px;transition:transform .12s ease}
+  .step:hover{transform:translateX(3px)}
+  .step .num{font-family:"Space Mono",monospace;font-weight:700;background:var(--sc);color:#fff;
+    width:34px;height:34px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:.92rem}
+  .step.ink-num .num{color:var(--ink)}
+  .step h3{margin:0 0 1px;font-size:1.06rem}
+  .step p{margin:0;color:var(--ink-soft);font-size:.9rem}
+  .step .actions{display:flex;flex-wrap:wrap;gap:8px;justify-content:flex-end}
+  .step.s1{--sc:var(--c1);--scl:var(--c1l)}
+  .step.s2{--sc:var(--c2);--scl:var(--c2l)}
+  .step.s3{--sc:var(--c3);--scl:var(--c3l)}
+  .step.s4{--sc:var(--c4);--scl:var(--c4l)}
+  .step.s5{--sc:var(--c5);--scl:var(--c5l)}
+  .step.s6{--sc:var(--c1);--scl:var(--c1l)}
+
+  /* TECH */
+  .tech .lead{color:var(--ink-soft);margin:0 0 16px;max-width:60ch}
+  details.acc{border:1px solid var(--line);border-radius:12px;background:var(--surface);margin-bottom:9px;overflow:hidden}
+  details.acc summary{cursor:pointer;padding:15px 20px;font-weight:600;font-size:1.02rem;list-style:none;
+    display:flex;justify-content:space-between;align-items:center;gap:12px}
+  details.acc summary::-webkit-details-marker{display:none}
+  details.acc summary::after{content:"+";color:var(--orange);font-family:"Space Mono",monospace;font-size:1.4rem;line-height:1}
+  details.acc[open] summary::after{content:"\2013"}
+  details.acc .body{padding:0 20px 20px}
+  details.acc .body>p:first-child{margin-top:0;color:var(--ink-soft);font-size:.9rem}
+  .cards{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
+  .card{background:var(--surface-2);border-radius:12px;padding:15px;display:flex;flex-direction:column;gap:5px}
+  .card .ftype{font-family:"Space Mono",monospace;font-size:.7rem;letter-spacing:.05em;color:var(--orange);font-weight:700}
+  .card h4{margin:0;font-size:.96rem;font-weight:600}
+  .card p{margin:0;color:var(--ink-soft);font-size:.83rem;flex:1}
+  .card .links{display:flex;flex-wrap:wrap;gap:6px 16px;margin-top:3px;font-family:"Space Mono",monospace;font-size:.78rem}
+  .card .links a{color:var(--ink);display:inline-flex;gap:6px}
+  .card .links a:hover{color:var(--orange)}
+  .card .links a::before{content:"↓";color:var(--ink-soft)}
+  .table-scroll{overflow-x:auto;border:1px solid var(--line);border-radius:10px}
+  table{border-collapse:collapse;width:100%;font-family:"Space Mono",monospace;font-size:.82rem}
+  th,td{padding:8px 14px;text-align:left;border-bottom:1px solid var(--line);white-space:nowrap}
+  thead th{color:var(--orange);font-weight:700}
+  td.pin{color:var(--orange)}
+  td.port b{color:var(--ink);font-weight:700}
+  .warns{display:grid;grid-template-columns:repeat(2,1fr);gap:12px}
+  .warn{background:var(--surface-2);border-left:3px solid var(--orange);border-radius:10px;padding:14px 16px}
+  .warn h4{margin:0 0 3px;font-size:.96rem;font-weight:600}
+  .warn p{margin:0;color:var(--ink-soft);font-size:.86rem}
+  .tune{display:grid;grid-template-columns:repeat(2,1fr);gap:4px 34px}
+  .tune div{display:flex;gap:14px;padding:8px 0;border-bottom:1px solid var(--line);align-items:baseline}
+  .tune code{font-family:"Space Mono",monospace;color:var(--orange);font-size:.83rem;white-space:nowrap}
+  .tune span{color:var(--ink-soft);font-size:.89rem}
+  .specs{display:flex;flex-wrap:wrap;gap:8px 20px;padding:18px 0 0;font-family:"Space Mono",monospace;font-size:.78rem;color:var(--ink-soft)}
+  .specs b{color:var(--ink);font-weight:400}
+  .specs .sep{color:var(--line-strong)}
+
+  /* FOOTER */
+  footer{background:var(--ink);color:var(--paper);padding:42px 0;margin-top:34px}
+  .foot-grid{display:grid;grid-template-columns:1.4fr 1fr;gap:40px}
+  .foot-logo{height:36px;width:auto;display:block;margin-bottom:12px}
+  footer h4{font-family:"Space Mono",monospace;font-size:.72rem;letter-spacing:.16em;text-transform:uppercase;color:#a49d8e;margin:0 0 12px;font-weight:700}
+  footer p{margin:.25rem 0;color:#e7e2d6;font-size:.92rem}
+  .foot-site{color:var(--orange);font-family:"Space Mono",monospace;font-size:.82rem}
+  .support-text{max-width:46ch;margin:12px 0 10px;line-height:1.4}
+  .support-btns{display:flex;flex-wrap:wrap;gap:10px;align-items:center;margin:0 0 16px}
+  .support-btns img{height:38px;width:auto;display:block}
+  .lic{display:inline-block;font-family:"Space Mono",monospace;font-size:.8rem;border:1px solid #3a3833;border-radius:8px;padding:8px 12px;color:var(--paper)}
+  .credits{padding:0;margin:0}
+  .credits li{margin:.25rem 0;color:#e7e2d6;font-size:.89rem;list-style:none}
+
+  @media (max-width:760px){
+    .nav-links{position:absolute;top:58px;left:0;right:0;background:var(--surface);border-bottom:1px solid var(--line);
+      flex-direction:column;align-items:stretch;gap:2px;padding:10px 24px 16px;margin:0;display:none}
+    .nav-links.open{display:flex}
+    .nav-links a:not(.btn){padding:12px 0;font-size:1rem}
+    .nav-links a.active::after{display:none}
+    .nav-cta{margin:8px 0 0}
+    .nav-toggle{display:inline-flex;margin-left:auto}
+  }
+  @media (max-width:820px){
+    .hero{grid-template-columns:1fr;gap:4px;padding-top:28px}
+    .stage{grid-row:1;max-width:270px}
+    .intro-grid,.foot-grid{grid-template-columns:1fr;gap:22px}
+    .needs,.cards,.warns,.tune{grid-template-columns:1fr}
+    .step{grid-template-columns:auto 1fr;gap:14px}
+    .step .actions{grid-column:1 / -1;justify-content:flex-start}
+  }
+  @media (max-width:520px){ section{padding:32px 0} }
+  @media (prefers-reduced-motion:reduce){
+    .bar-grp,.ball,.target-ring{animation:none}
+    .bar-grp{transform:rotate(-3deg)}
+    html{scroll-behavior:auto}
+    .btn:hover,.step:hover{transform:none}
+  }
+</style>
+</head>
+<body>
+
+<nav class="topnav">
+<div class="wrap nav-inner">
+<a class="nav-brand" href="#top"><svg class="nav-logo"
+  
+  
+   viewBox="0 0 79.999771 79.999771"
+   version="1.1"
+   id="svg1"
+   xml:space="preserve"
+   inkscape:version="1.4 (e7c3feb1, 2024-10-09)"
+   sodipodi:docname="Logomaquina.svg"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg"><defs
+     id="defs1"><clipPath
+       clipPathUnits="userSpaceOnUse"
+       id="clipPath4"><path
+         d="M 0,283.465 H 566.929 V 0 H 0 Z"
+         transform="translate(-36.936001,-141.7298)"
+         id="path4" /></clipPath><clipPath
+       clipPathUnits="userSpaceOnUse"
+       id="clipPath6"><path
+         d="M 0,283.465 H 566.929 V 0 H 0 Z"
+         transform="translate(-211.9951,-123.2587)"
+         id="path6" /></clipPath><clipPath
+       clipPathUnits="userSpaceOnUse"
+       id="clipPath8"><path
+         d="M 0,283.465 H 566.929 V 0 H 0 Z"
+         transform="translate(-163.48881,-115.10731)"
+         id="path8" /></clipPath><clipPath
+       clipPathUnits="userSpaceOnUse"
+       id="clipPath10"><path
+         d="M 0,283.465 H 566.929 V 0 H 0 Z"
+         transform="translate(-222.4873,-145.1707)"
+         id="path10" /></clipPath><clipPath
+       clipPathUnits="userSpaceOnUse"
+       id="clipPath12"><path
+         d="M 0,283.465 H 566.929 V 0 H 0 Z"
+         transform="translate(-320.40041,-141.7298)"
+         id="path12" /></clipPath><clipPath
+       clipPathUnits="userSpaceOnUse"
+       id="clipPath14"><path
+         d="M 0,283.465 H 566.929 V 0 H 0 Z"
+         transform="translate(-495.45951,-123.2587)"
+         id="path14" /></clipPath><clipPath
+       clipPathUnits="userSpaceOnUse"
+       id="clipPath16"><path
+         d="M 0,283.465 H 566.929 V 0 H 0 Z"
+         transform="translate(-446.95361,-115.10731)"
+         id="path16" /></clipPath><clipPath
+       clipPathUnits="userSpaceOnUse"
+       id="clipPath18"><path
+         d="M 0,283.465 H 566.929 V 0 H 0 Z"
+         transform="translate(-505.95211,-145.1707)"
+         id="path18" /></clipPath></defs><g
+     inkscape:label="Camada 1"
+     inkscape:groupmode="layer"
+     id="layer1"
+     transform="translate(-146.41919,-14.065143)" /><g
+     id="layer-MC0"
+     inkscape:groupmode="layer"
+     inkscape:label="Camada 1"
+     transform="matrix(0.26458333,0,0,0.26458334,73.580816,-14.065143)"><path
+       id="path9"
+       clip-path="url(#clipPath10)"
+       style="fill:#2f364f;fill-opacity:1;fill-rule:nonzero;stroke:none"
+       transform="matrix(1.3333333,0,0,-1.3333333,-19.001699,199.75572)"
+       d="M 0,0 C -0.248,5.914 -1.131,11.665 -2.586,17.187 4.925,13.605 7.769,10.164 7.769,8 7.769,5.524 5.069,2.734 0,0 m -169.333,8 c 0,2.102 2.751,5.472 9.991,9.002 -1.413,-5.413 -2.275,-11.045 -2.53,-16.833 -4.868,2.68 -7.461,5.406 -7.461,7.831 m 88.396,19.474 c -18.202,0 -32.955,-14.754 -32.955,-32.952 0,-2.254 0.238,-4.451 0.669,-6.577 -4.468,0.48 -8.707,1.052 -12.707,1.698 -0.345,2.273 -0.526,4.584 -0.526,6.916 0,25.101 20.421,45.524 45.519,45.524 25.099,0 45.519,-20.423 45.519,-45.524 0,-2.344 -0.184,-4.673 -0.537,-6.968 -4.001,-0.64 -8.241,-1.205 -12.708,-1.679 0.436,2.137 0.678,4.345 0.678,6.61 0,18.198 -14.749,32.952 -32.952,32.952 m 0,41.332 c 39.835,0 72.242,-32.412 72.242,-72.247 0,-0.115 -0.006,-0.229 -0.006,-0.344 -5.031,-1.81 -11.136,-3.508 -18.206,-4.972 0.172,1.762 0.262,3.535 0.262,5.316 0,29.94 -24.357,54.297 -54.292,54.297 -29.937,0 -54.292,-24.357 -54.292,-54.297 0,-1.76 0.089,-3.511 0.255,-5.249 -7.082,1.479 -13.19,3.193 -18.205,5.018 0,0.077 -0.005,0.154 -0.005,0.231 0,39.835 32.41,72.247 72.247,72.247 m 74.18,-39.252 -0.085,-0.246 c -12.603,28.405 -41.07,48.271 -74.095,48.271 -32.991,0 -61.436,-19.823 -74.059,-48.182 l -0.128,-0.023 -0.804,-0.216 C -171.396,23.562 -179.239,16.442 -179.239,8 c 0,-20.761 49.531,-31.623 98.458,-31.623 48.928,0 98.46,10.862 98.46,31.623 0,8.654 -8.225,15.907 -24.436,21.554 m -52.241451,-59.617398 c -7.054,-0.485 -14.36,-0.733 -21.788,-0.733 -7.544,0 -14.962,0.256 -22.121999,0.757 5.833999,-5.217 13.523999,-8.394 21.971999,-8.394 8.428,0 16.108,3.167 21.938,8.37 m 48.506251,8.151397 c -0.015,-0.064 -0.034,-0.128 -0.048,-0.192 -0.901,-0.225 -1.818,-0.387 -2.765,-0.653 -7.18,-2.05 -15.297,-3.736 -24.061,-5.028 -8.535,-15.254 -24.848,-25.562 -43.57,-25.562 -18.747,0 -35.069,10.337 -43.595,25.616 -8.637,1.287 -16.634,2.949 -23.726,4.974 -0.382,0.109 -0.754,0.209 -1.129,0.313 -0.001,0.004 -0.002,0.008 -0.003,0.012 l -11.747,3.999 c 1.64,-7.262 4.505,-14.732 8.277,-21.815 -5.248,-5.136 -6.189,-13.453 -1.844,-19.667 l 0.209,-0.291 c 4.579,-6.544 13.49,-8.199 20.288,-4.255 0.768,-0.681 1.543,-1.35 2.33,-1.988 10.377,-8.396 22.714,-14.048 35.743,-16.544 1.848,-6.343 7.632,-11.024 14.56,-11.024 h 0.36 c 7.004,0 12.892,4.517 14.697,10.873 13.291,2.414 25.89,8.116 36.462,16.657 0.619,0.5 1.221,1.031 1.824,1.558 6.669,-3.315 15.016,-1.54 19.3999997,4.723 l 0.203,0.291 c 4.19,5.981 3.474,13.913 -1.261,19.08 3.587,7.016 6.29,14.444 7.951,21.751 z m -175.05908,18.4710984 c 0,-57.6830004 46.93,-104.6099974 104.615,-104.6099974 57.682,0 104.61,46.926997 104.61,104.6099974 0,57.6829996 -46.928,104.6150026 -104.61,104.6150026 -57.685,0 -104.615,-46.932003 -104.615,-104.6150026 m 217.998,0 c 0,-62.5190004 -50.862,-113.3829974 -113.383,-113.3829974 -62.522,0 -113.388,50.863997 -113.388,113.3829974 0,62.5209996 50.866,113.3880026 113.388,113.3880026 62.521,0 113.383,-50.867003 113.383,-113.3880026" /></g></svg> Máquina Tudo</a>
+<div class="nav-links" id="navlinks">
+<a href="#sobre">O que é</a>
+<a href="#precisa">Requisitos</a>
+<a href="#comecar">Como montar</a>
+<a href="#tecnico">Técnico</a>
+<a class="btn btn-primary sm nav-cta" href="https://github.com/fbmasutti/GapEscapeGame/archive/refs/heads/main.zip">Baixar</a>
+</div>
+<button class="nav-toggle" id="navtoggle" aria-label="Abrir menu" aria-expanded="false">
+<svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M4 7h16M4 12h16M4 17h16"/></svg>
+</button>
+</div>
+</nav>
+
+<div class="wrap" id="top">
+
+<header class="hero">
+<div>
+<span class="badge">Arcade V1.0 · open source</span>
+<h1>Escapa<em>Buraco</em></h1>
+<p class="lede">Um fliperama de madeira que você corta, monta e programa.</p>
+<div class="cta-row">
+<a class="btn btn-primary" href="https://github.com/fbmasutti/GapEscapeGame/archive/refs/heads/main.zip">
+<svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M12 3v12m0 0l-4-4m4 4l4-4M4 21h16"/></svg>
+Baixar projeto (.zip)
+</a>
+<a class="btn btn-ghost" href="#comecar">Como montar</a>
+</div>
+</div>
+<div aria-hidden="true" class="stage">
+<svg role="img" viewBox="0 0 440 380">
+<rect fill="var(--surface)" height="322" rx="20" stroke="var(--ink)" stroke-width="2.5" width="360" x="40" y="24"></rect>
+<g>
+<circle cx="105" cy="78" fill="var(--paper)" r="15" stroke="var(--orange)" stroke-width="3"></circle>
+<circle cx="185" cy="66" fill="var(--paper)" r="15" stroke="var(--ink)" stroke-width="2"></circle>
+<circle cx="265" cy="80" fill="var(--paper)" r="15" stroke="var(--ink)" stroke-width="2"></circle>
+<circle cx="340" cy="70" fill="var(--paper)" r="15" stroke="var(--orange)" stroke-width="3"></circle>
+<circle cx="140" cy="140" fill="var(--paper)" r="15" stroke="var(--ink)" stroke-width="2"></circle>
+<circle cx="300" cy="150" fill="var(--paper)" r="15" stroke="var(--ink)" stroke-width="2"></circle>
+<circle class="target-ring" cx="222" cy="140" fill="none" r="19" stroke="var(--orange)" stroke-width="2.5"></circle>
+<circle cx="222" cy="140" fill="var(--paper)" r="15" stroke="var(--orange)" stroke-width="2.5"></circle>
+<text fill="var(--orange)" font-family="Space Mono, monospace" font-size="13" font-weight="700" text-anchor="middle" x="222" y="145">10</text>
+</g>
+<g class="bar-grp">
+<rect fill="var(--ink)" height="14" rx="7" width="284" x="78" y="250"></rect>
+<rect fill="var(--surface)" height="38" rx="6" stroke="var(--ink)" stroke-width="2" width="30" x="62" y="238"></rect>
+<rect fill="var(--surface)" height="38" rx="6" stroke="var(--ink)" stroke-width="2" width="30" x="348" y="238"></rect>
+<circle cx="220" cy="238" fill="var(--orange)" r="14"></circle>
+<circle cx="215" cy="233" fill="#ff9a6f" r="4"></circle>
+</g>
+<text fill="var(--ink-soft)" font-family="Space Mono, monospace" font-size="11" letter-spacing="2" x="60" y="330">X ◂ MOTOR ▸ Y</text>
+</svg>
+</div>
+</header>
+
+<!-- O QUE É -->
+<section id="sobre">
+<div class="intro-grid">
+<div>
+<span class="eyebrow">O que é</span>
+<div class="sec-head"><h2>Você constrói. Você joga.</h2></div>
+<p>Dois motores inclinam a barra; você leva a bolinha subindo pelos buracos sem deixá-la cair. Projeto aberto: baixe, fabrique e monte o seu.</p>
+</div>
+<figure>
+<img alt="Escapa Buraco Arcade montado" loading="lazy" onerror="this.closest('figure').style.display='none'" src="IMAGENS/Escapa1.jpg"/>
+<figcaption>
+<span>Escapa Buraco Arcade V1.0</span>
+<a download href="IMAGENS/Escapa1.jpg">Baixar imagem ↓</a>
+</figcaption>
+</figure>
+</div>
+</section>
+
+<!-- REQUISITOS -->
+<section id="precisa">
+<span class="eyebrow">Antes de começar</span>
+<div class="sec-head">
+<h2>O que você vai precisar</h2>
+<p>O tempo de montagem varia conforme sua experiência e as máquinas disponíveis.</p>
+</div>
+<div class="needs">
+<div class="need">
+<h3>Máquinas</h3>
+<ul>
+<li><b>Corte a laser</b> — peças de MDF e acrílico</li>
+<li><b>Serra angular</b> — ajustes manuais em algumas peças</li>
+<li><b>Furadeira / parafusadeira</b></li>
+</ul>
+</div>
+<div class="need">
+<h3>Ferramentas e materiais</h3>
+<ul>
+<li><b>Brocas 2–4 mm</b> (maiores para os chanfros)</li>
+<li><b>Chave Philips média</b> e <b>chave de fenda pequena</b></li>
+<li><b>Alicate de bico fino</b> e <b>fita adesiva</b></li>
+<li><b>Ferro de solda</b> (para o display)</li>
+<li><b>Parafusos e porcas M3</b></li>
+</ul>
+</div>
+</div>
+</section>
+
+<!-- COMO MONTAR -->
+<section id="comecar">
+<span class="eyebrow">Passo a passo</span>
+<div class="sec-head"><h2>Como montar</h2></div>
+<div class="journey">
+
+<div class="step s1">
+<div class="num">1</div>
+<div><h3>Baixe o projeto</h3><p>Tudo num arquivo só.</p></div>
+<div class="actions"><a class="btn btn-primary sm" href="https://github.com/fbmasutti/GapEscapeGame/archive/refs/heads/main.zip">Baixar .zip</a></div>
+</div>
+
+<div class="step s2">
+<div class="num">2</div>
+<div><h3>Corte as peças</h3><p>Corte a laser (MDF e acrílico).</p></div>
+<div class="actions">
+<a class="btn btn-primary sm" download="MÁQUINA TUDO_ESCAPA BURACO ARCADE V1.0 - PLANO DE CORTE_MDF.pdf" href="MÁQUINA%20TUDO_ESCAPA%20BURACO%20ARCADE%20V1.0%20-%20PLANO%20DE%20CORTE_MDF.pdf">MDF</a>
+<a class="btn btn-primary sm" download="MÁQUINA TUDO_ESCAPA BURACO ARCADE V1.0 - PLANO DE CORTE_ACRÍLICO.pdf" href="MÁQUINA%20TUDO_ESCAPA%20BURACO%20ARCADE%20V1.0%20-%20PLANO%20DE%20CORTE_ACRÍLICO.pdf">Acrílico</a>
+</div>
+</div>
+
+<div class="step s3 ink-num">
+<div class="num">3</div>
+<div><h3>Monte a estrutura</h3><p>Siga o manual ilustrado.</p></div>
+<div class="actions"><a class="btn btn-primary sm" download="MÁQUINA TUDO_ESCAPA BURACO ARCADE V1.0 - MANUAL DA ESTRUTURA.pdf" href="MÁQUINA%20TUDO_ESCAPA%20BURACO%20ARCADE%20V1.0%20-%20MANUAL%20DA%20ESTRUTURA.pdf">Manual</a></div>
+</div>
+
+<div class="step s4 ink-num">
+<div class="num">4</div>
+<div><h3>Monte a eletrônica</h3><p>Confira a pinagem e os avisos.</p></div>
+<div class="actions"><a class="btn btn-ghost sm" href="#tecnico">Pinagem ↓</a></div>
+</div>
+
+<div class="step s5">
+<div class="num">5</div>
+<div><h3>Grave o firmware</h3><p>Envie o código pela IDE Arduino.</p></div>
+<div class="actions"><a class="btn btn-primary sm" href="https://github.com/fbmasutti/GapEscapeGame/blob/main/SOFTWARE/LEIAME.md">Manual do software</a></div>
+</div>
+
+<div class="step s6">
+<div class="num">6</div>
+<div><h3>Jogue e ajuste</h3><p>Calibre e personalize.</p></div>
+<div class="actions"><a class="btn btn-ghost sm" href="#tecnico">Personalizar ↓</a></div>
+</div>
+
+</div>
+</section>
+
+<!-- TÉCNICO -->
+<section id="tecnico" class="tech">
+<span class="eyebrow">Para makers</span>
+<div class="sec-head"><h2>Detalhes técnicos</h2></div>
+<p class="lead">Referências para montar a eletrônica e mexer no código. Abra só o que precisar.</p>
+
+<details class="acc" open>
+<summary>Avisos (leia antes de energizar)</summary>
+<div class="body">
+<div class="warns">
+<div class="warn"><h4>Orientação do driver</h4><p>Alinhe o pino EN ao EN do shield — invertido, queima. Só 2 drivers, nos soquetes X e Y.</p></div>
+<div class="warn"><h4>Polaridade do display</h4><p>O TM1637 não tem proteção contra inversão. Inverter VCC/GND pode danificá-lo.</p></div>
+<div class="warn"><h4>Buzzer passivo</h4><p>Use alto-falante ou buzzer passivo — buzzer ativo não toca as melodias.</p></div>
+<div class="warn"><h4>Corrente (Vref)</h4><p>Ajuste o Vref por motor. DRV8825 com Rsense 0,1 Ω: Vref = I ÷ 2.</p></div>
+</div>
+</div>
+</details>
+
+<details class="acc">
+<summary>Pinagem completa</summary>
+<div class="body">
+<p>Todas as chaves usam o pull-up interno: fechado = LOW.</p>
+<div class="table-scroll">
+<table>
+<thead><tr><th>Função</th><th>Pino</th><th>Porta no Shield</th></tr></thead>
+<tbody>
+<tr><td>STEP esquerdo (X)</td><td class="pin">D2</td><td class="port">soquete <b>X</b> (X.STEP)</td></tr>
+<tr><td>DIR esquerdo (X)</td><td class="pin">D5</td><td class="port">soquete <b>X</b> (X.DIR)</td></tr>
+<tr><td>STEP direito (Y)</td><td class="pin">D3</td><td class="port">soquete <b>Y</b> (Y.STEP)</td></tr>
+<tr><td>DIR direito (Y)</td><td class="pin">D6</td><td class="port">soquete <b>Y</b> (Y.DIR)</td></tr>
+<tr><td>ENABLE motores</td><td class="pin">D8</td><td class="port"><b>EN/GND</b></td></tr>
+<tr><td>Display — CLK</td><td class="pin">D4</td><td class="port"><b>Z.STEP</b></td></tr>
+<tr><td>Display — DIO</td><td class="pin">D7</td><td class="port"><b>Z.DIR</b></td></tr>
+<tr><td>Joystick esq. — sobe</td><td class="pin">A0</td><td class="port"><b>Abort</b></td></tr>
+<tr><td>Joystick esq. — desce</td><td class="pin">A1</td><td class="port"><b>Hold</b></td></tr>
+<tr><td>Joystick dir. — sobe</td><td class="pin">A2</td><td class="port"><b>Resume</b></td></tr>
+<tr><td>Joystick dir. — desce</td><td class="pin">A3</td><td class="port"><b>CoolEn</b></td></tr>
+<tr><td>Fim de curso X</td><td class="pin">D9</td><td class="port"><b>X-</b> (END STOPS)</td></tr>
+<tr><td>Fim de curso Y</td><td class="pin">D10</td><td class="port"><b>Y-</b> (END STOPS)</td></tr>
+<tr><td>Alto-falante / buzzer</td><td class="pin">D11</td><td class="port"><b>Z-</b> (END STOPS)</td></tr>
+<tr><td>Botão de início</td><td class="pin">D12</td><td class="port"><b>SpnEn</b></td></tr>
+<tr><td>Fim de percurso</td><td class="pin">D13</td><td class="port"><b>SpnDir</b></td></tr>
+<tr><td>Buraco 10 (vitória)</td><td class="pin">A4</td><td class="port"><b>SDA</b> (I2C)</td></tr>
+</tbody>
+</table>
+</div>
+</div>
+</details>
+
+<details class="acc">
+<summary>Arquivos de código (SOFTWARE/)</summary>
+<div class="body">
+<div class="cards">
+<div class="card"><span class="ftype">.ino · principal</span><h4>Firmware</h4><p>Lógica do jogo, motores e display.</p><div class="links"><a href="https://github.com/fbmasutti/GapEscapeGame/blob/main/SOFTWARE/EscapaBuracoAnalog_v09/EscapaBuracoAnalog_v09.ino">EscapaBuracoAnalog_v09.ino</a></div></div>
+<div class="card"><span class="ftype">.ino · áudio</span><h4>Músicas</h4><p>Melodias de início, vitória e fim.</p><div class="links"><a href="https://github.com/fbmasutti/GapEscapeGame/blob/main/SOFTWARE/EscapaBuracoAnalog_v09/tocarMusica.ino">tocarMusica.ino</a></div></div>
+<div class="card"><span class="ftype">.h / .cpp</span><h4>Notas</h4><p>Frequências das notas.</p><div class="links"><a href="https://github.com/fbmasutti/GapEscapeGame/blob/main/SOFTWARE/EscapaBuracoAnalog_v09/pitches.h">pitches.h</a><a href="https://github.com/fbmasutti/GapEscapeGame/blob/main/SOFTWARE/EscapaBuracoAnalog_v09/pitches.cpp">pitches.cpp</a></div></div>
+<div class="card"><span class="ftype">.zip · biblioteca</span><h4>Display TM1637</h4><p>Biblioteca de Avishay Orpaz.</p><div class="links"><a download href="SOFTWARE/libraries/TM1637-avishorp.zip">TM1637-avishorp.zip</a></div></div>
+<div class="card"><span class="ftype">.md · manual</span><h4>Manual do software</h4><p>Drivers, corrente, pinagem, upload.</p><div class="links"><a href="https://github.com/fbmasutti/GapEscapeGame/blob/main/SOFTWARE/LEIAME.md">LEIAME.md</a></div></div>
+</div>
+</div>
+</details>
+
+<details class="acc">
+<summary>Personalizar o jogo</summary>
+<div class="body">
+<p>Constantes no <span class="mono">EscapaBuracoAnalog_v09.ino</span>.</p>
+<div class="tune">
+<div><code>minutos / segundos</code><span>tempo da partida</span></div>
+<div><code>VELOCIDADE_MAXIMA</code><span>velocidade (menor = mais rápido)</span></div>
+<div><code>VELOCIDADE_MINIMA</code><span>velocidade lenta dos limites</span></div>
+<div><code>MAX_PONTOS</code><span>curso máximo da barra</span></div>
+<div><code>MAX_DIFERENCA_PASSOS</code><span>tolerância de desnível</span></div>
+<div><code>PASSOS_POR_REVOLUCAO</code><span>escala dos passos</span></div>
+</div>
+</div>
+</details>
+
+<div class="specs mono">
+<span><b>Arduino Uno</b></span><span class="sep">/</span>
+<span><b>CNC Shield v3</b></span><span class="sep">/</span>
+<span>2× <b>DRV8825</b> · 1/32</span><span class="sep">/</span>
+<span>Display <b>TM1637</b></span><span class="sep">/</span>
+<span><b>Alto-falante</b></span>
+</div>
+</section>
+
+</div><!-- /wrap -->
+
+<footer>
+<div class="wrap foot-grid">
+<div>
+<img class="foot-logo" src="https://github.com/fbmasutti/PixFront/blob/main/Logobranco.png?raw=true" alt="Coletivo Máquina Tudo" onerror="this.style.display='none'"/>
+<p>O Escapa Buraco Arcade une tecnologia, arte e educação.</p>
+<p><a class="foot-site" href="https://www.maquinatudo.com.br" target="_blank" rel="noopener">www.maquinatudo.com.br ↗</a></p>
+<p class="support-text">Estes arquivos são abertos e gratuitos, mas toda a pesquisa e elaboração exige muito tempo e recursos. Considere nos apoiar com um PIX ou um cafezinho no Ko-fi.</p>
+<p class="support-btns">
+<a href="https://ko-fi.com/X2B022PXNT" target="_blank" rel="noopener"><img src="https://ko-fi.com/img/githubbutton_sm.svg" alt="Apoiar no Ko-fi"/></a>
+<a href="https://fbmasutti.github.io/PixFront" target="_blank" rel="noopener"><img src="https://raw.githubusercontent.com/fbmasutti/PixFront/09e31dd65ba4eb97b920e82d81e320299108df46/botao_pix_maquinatudo.svg" alt="Apoiar via PIX"/></a>
+</p>
+<a class="lic" href="https://creativecommons.org/licenses/by-nc/4.0/deed.pt-br" target="_blank" rel="noopener">Licença CC BY-NC 4.0</a>
+</div>
+<div>
+<h4>Créditos de terceiros</h4>
+<ul class="credits">
+<li>Display <b>TM1637</b> — Avishay Orpaz (LGPL 2.1)</li>
+<li>Notas <span class="mono">pitches.h</span> — HiBit</li>
+<li>Músicas — base no <em>arduino-songs</em> de Robson Couto</li>
+</ul>
+</div>
+</div>
+</footer>
+
+<script>
+  (function(){
+    var toggle=document.getElementById('navtoggle');
+    var menu=document.getElementById('navlinks');
+    if(toggle&&menu){
+      toggle.addEventListener('click',function(){
+        var open=menu.classList.toggle('open');
+        toggle.setAttribute('aria-expanded',open?'true':'false');
+      });
+      menu.querySelectorAll('a').forEach(function(a){
+        a.addEventListener('click',function(){menu.classList.remove('open');toggle.setAttribute('aria-expanded','false');});
+      });
+    }
+    var ids=['sobre','precisa','comecar','tecnico'];
+    var secs=ids.map(function(id){return document.getElementById(id);}).filter(Boolean);
+    function linkFor(id){return document.querySelector('.nav-links a[href="#'+id+'"]');}
+    if('IntersectionObserver' in window){
+      var io=new IntersectionObserver(function(entries){
+        entries.forEach(function(e){
+          if(e.isIntersecting){
+            document.querySelectorAll('.nav-links a').forEach(function(a){a.classList.remove('active');});
+            var l=linkFor(e.target.id); if(l)l.classList.add('active');
+          }
+        });
+      },{rootMargin:'-45% 0px -50% 0px'});
+      secs.forEach(function(s){io.observe(s);});
+    }
+  })();
+</script>
+</body>
+</html>
